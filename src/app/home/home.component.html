@@ -1,0 +1,129 @@
+<ActionBar title="Panafri User">
+    <NavigationButton icon="res://menu" (tap)="onOpenDrawerTap()"></NavigationButton>
+
+</ActionBar>
+
+<RadSideDrawer tkExampleTitle tkToggleNavButton>
+  <StackLayout tkDrawerContent class="sideStackLayout">
+   <StackLayout class="sidedrawer-header">
+    <Image class="sidedrawer-header-image img-circle" src="https://apollo-ireland.akamaized.net/v1/files/8ljfih0ar32j1-NG/image;s=600x1200;q=20"></Image>
+    <Label class="sidedrawer-header-brand" text="Kenndy Edah"></Label>
+  </StackLayout>
+    <ScrollView>
+      <StackLayout class="sideStackLayout">
+        <Label text="&#xf00a; &nbsp; Categories" (tap)="goToCategories()" class="sideLabel fab icon"></Label>
+        <Label text="&#xf59d; &nbsp; Products" (tap)="goToProducts()" class="sideLabel fab icon"></Label>
+        <Label text="&#xf552; &nbsp; Services" (tap)="goToServices()" class="sideLabel fab icon"></Label>
+        <Label text="&#xf27a; &nbsp; Chat"  class="sideLabel fab icon"></Label>
+        <Label text="&#xf0f3; &nbsp; Notifications" (tap)="goToNotifications()" class="sideLabel fab icon"></Label>
+        <Label text="&#xf2bd; &nbsp; My Profile" (tap)="goToProfile()" class="sideLabel fab icon"></Label>
+        <Label text="&#xf013; &nbsp; Settings" class="sideLabel fab icon"></Label>
+        <Label text="&#xf2f5; &nbsp; Log out" (tap)="logout()" class="sideLabel fab icon"></Label>
+      </StackLayout>
+    </ScrollView>
+  </StackLayout>
+  <StackLayout tkMainContent class="mainContent">
+    <ScrollView>
+      <StackLayout>
+        <SearchBar hint="Search for Product & Service" (loaded)="sBLoaded($event)" [text]="searchPhrase" (submit)="onSearchSubmit($event)" ></SearchBar>
+        <Label class="categories"  text="Browse from categories"></Label>
+        <GridLayout rows="*, *, *" columns="*, *, *">
+          <StackLayout class="category-icon" row="0" col="0">
+              <Label class="fab icon" text="&#xf1b9;"></Label>
+              <Label class="name" text="Transporter"></Label>
+          </StackLayout>
+          <StackLayout class="category-icon" row="0" col="1">
+              <Label class="fab icon" text="&#xf553;"></Label>
+              <Label class="name" text="Fashion"></Label>
+          </StackLayout>
+          <StackLayout class="category-icon" row="0" col="2">
+            <Label class="fab icon" text="&#xf48b;"></Label>
+            <Label class="name" text="Delivery"></Label>
+          </StackLayout>
+
+          <StackLayout class="category-icon" row="1" col="0">
+              <Label class="fab icon" text="&#xf2e7;"></Label>
+              <Label class="name" text="Catering"></Label>
+          </StackLayout>
+          <StackLayout class="category-icon" row="1" col="1">
+              <Label class="fab icon" text="&#xf64f;"></Label>
+              <Label class="name" text="Real Estate"></Label>
+          </StackLayout>
+          <StackLayout class="category-icon" row="1" col="2">
+            <Label class="fab icon" text="&#xf26c;"></Label>
+            <Label class="name" text="Electronics"></Label>
+          </StackLayout>
+
+          <StackLayout class="category-icon" row="2" col="0">
+              <Label class="fab icon" text="&#xf5ce;"></Label>
+              <Label class="name" text="Drinks & Party"></Label>
+          </StackLayout>
+          <StackLayout class="category-icon" row="2" col="1">
+              <Label class="fab icon" text="&#xf4b8;"></Label>
+              <Label class="name" text="Funitures"></Label>
+          </StackLayout>
+          <StackLayout class="category-icon" row="2" col="2" (tap)="goToCategories()">
+            <Label class="fab icon" text="&#xf141;"></Label>
+            <Label class="name" text="More options"></Label>
+          </StackLayout>
+        </GridLayout>
+
+        <Label class="categories"  text="Suggested For you"></Label>
+        <GridLayout rows="auto" columns="*, *">
+            <StackLayout class="card-view card card-3" row="0" col="0">
+              <StackLayout class="card-image" (tap)="goToProduct('i')">
+                  <Image src="https://apollo-ireland.akamaized.net/v1/files/8ljfih0ar32j1-NG/image;s=600x1200;q=20"
+                  stretch="fill" decodeWidth="400" decodeHeight="400" loadMode="async"></Image>
+              </StackLayout>
+              <StackLayout class="card-content" (tap)="onOpenDrawerTap()">
+                  <Label class="title" text="Gucci snake"></Label>
+                  <Label class="price" text="N50,000"></Label>
+                  <Label class="loaction" text="Fashion in Berger (1km near you)"></Label>
+                  <Button class="btn btn-primary btn-active" text="Request" (tap)="request()"></Button>
+              </StackLayout>
+            </StackLayout>
+            <StackLayout class="card-view card card-3" row="0" col="1">
+                <StackLayout class="card-image" (tap)="goToProduct('i')">
+                    <Image src="https://apollo-ireland.akamaized.net/v1/files/8ljfih0ar32j1-NG/image;s=600x1200;q=20"
+                    stretch="fill" decodeWidth="400" decodeHeight="400" loadMode="async"></Image>
+                </StackLayout>
+                <StackLayout class="card-content">
+                    <Label class="title" text="Gucci bag"></Label>
+                    <Label class="price" text="N50,000"></Label>
+                    <Label class="loaction" text="Fashion in Berger (3km near you)"></Label>
+                    <Button class="btn btn-primary btn-active" text="Request" (tap)="request()"></Button>
+                </StackLayout>
+              </StackLayout>
+          </GridLayout>
+
+          <Label class="categories"  text="Suggested Services"></Label>
+        <GridLayout rows="auto" columns="*, *">
+            <StackLayout class="card-view card card-3" row="0" col="0">
+              <StackLayout class="card-image">
+                  <Image src="https://apollo-ireland.akamaized.net/v1/files/8ljfih0ar32j1-NG/image;s=600x1200;q=20"
+                  stretch="fill" decodeWidth="400" decodeHeight="400" loadMode="async"></Image>
+              </StackLayout>
+              <StackLayout class="card-content">
+                  <Label class="title" text="Gucci bag"></Label>
+                  <Label class="price" text="N50,000"></Label>
+                  <Label class="loaction" text="Fashion in Berger (1km near you)"></Label>
+                  <Button class="btn btn-primary btn-active" text="Request" (tap)="request()"></Button>
+              </StackLayout>
+            </StackLayout>
+            <StackLayout class="card-view card card-3" row="0" col="1">
+                <StackLayout class="card-image">
+                    <Image src="https://apollo-ireland.akamaized.net/v1/files/8ljfih0ar32j1-NG/image;s=600x1200;q=20"
+                    stretch="fill" decodeWidth="400" decodeHeight="400" loadMode="async"></Image>
+                </StackLayout>
+                <StackLayout class="card-content">
+                    <Label class="title" text="Gucci bag"></Label>
+                    <Label class="price" text="N50,000"></Label>
+                    <Label class="loaction" text="Fashion in Berger (3km near you)"></Label>
+                    <Button class="btn btn-primary btn-active" text="Request" (tap)="request()"></Button>
+                </StackLayout>
+              </StackLayout>
+          </GridLayout>
+      </StackLayout>
+    </ScrollView>
+  </StackLayout>
+</RadSideDrawer>
