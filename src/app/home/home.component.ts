@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Products } from "../shared/products/products.model";
+import { ProductsService } from "../shared/products/products.service";
+import { Services } from "../shared/services/services.model";
+import { ServicesService } from "../shared/services/services.service";
 import { RadSideDrawerComponent, SideDrawerType } from "nativescript-ui-sidedrawer/angular";
 import { SearchBar } from "ui/search-bar";
 import { RouterExtensions } from 'nativescript-angular/router';
@@ -9,21 +13,53 @@ import { Page } from "tns-core-modules/ui/page";
   selector: 'home',
   moduleId: module.id,
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  providers: [ProductsService, ServicesService]
 })
 
 export class HomeComponent implements OnInit {
   @ViewChild(RadSideDrawerComponent) public drawerComponent: RadSideDrawerComponent;
 
-  constructor(
-    public router: Router,
+  productList: Array<Products> = [];
+  serviceList: Array<Services> = [];
+
+    product = "";
+    service = "";
+    isLoading = false;
+    listLoaded = false;
+
+	constructor(
+    private ServiceService: ServicesService,
+		private ProductsService: ProductsService,
+		public router: Router,
     private routerExtensions: RouterExtensions,
     private page: Page
-  ) { }
+	) { }
 
   ngOnInit() {
 
     this.page.actionBarHidden = false;
+    this.isLoading = true;
+      this.ProductsService.load()
+        .subscribe(loadedProducts => {
+          loadedProducts.forEach((productObject) => {
+            this.productList.unshift(productObject);
+            
+          });
+          this.isLoading = false;
+          this.listLoaded = true;
+        });
+
+        this.isLoading = true;
+        this.ServiceService.load()
+          .subscribe(loadedServices => {
+            loadedServices.forEach((serviceObject) => {
+              this.serviceList.unshift(serviceObject);
+              console.log(serviceObject)
+            });
+            this.isLoading = false;
+            this.listLoaded = true;
+          });
   }
 
   // submit() {

@@ -1,1 +1,164 @@
+/*
+In NativeScript, the app.css file is where you place CSS rules that
+you would like to apply to your entire application. Check out
+http://docs.nativescript.org/ui/styling for a full list of the CSS
+selectors and properties you can use to style UI components.
 
+/*
+In many cases you may want to use the NativeScript core theme instead
+of writing your own CSS rules. For a full list of class names in the theme
+refer to http://docs.nativescript.org/ui/theme.
+*/
+@import '~nativescript-theme-core/css/core.light.css';
+
+/*
+For example, the following CSS rule changes the font size of all UI
+components that have the btn class name.
+*/
+.btn {
+    font-size: 18;
+}
+
+.far {
+    font-family: Font Awesome 5 Free, fa-solid-900;
+    font-weight: 400; 
+}
+
+.fab {
+    font-family: Font Awesome 5 Free, fa-solid-900;
+    font-weight: 400; 
+}
+
+.fas {
+    font-family: Font Awesome 5 Free, fa-solid-900;
+    font-weight: 900; 
+}.far {
+    font-family: Font Awesome 5 Free, fa-solid-900;
+    font-weight: 400; 
+}
+
+.action-bar {
+    background-color: red;
+    color: #fff;
+}
+
+.request-button {
+    background-color: red;
+}
+
+.request-button:active {
+    background-color: red;
+}
+
+
+.drawerContentText {
+    font-size: 13;
+    padding: 10;
+}
+
+.mainContent {
+    background-color: white;
+}
+
+.drawerContentButton {
+    margin: 10;
+    horizontal-align: left;
+}
+
+.sideStackLayout {
+    background-color: #fff;
+    color: #455a64;
+}
+
+.sideTitleStackLayout {
+    /* height: 120em; */
+    padding: 10em;
+    border-bottom-width: 1px;
+    border-bottom-color: #cfd8dc;
+}
+
+.sideLabel {
+    padding: 15;
+    font-size: 20em
+}
+
+.sideLightGrayLabel {
+    background-color: #fff;
+}
+
+.category-icon {
+    color: black;
+    padding: 15em;
+    text-align: center;
+    border-bottom-width: 1;
+    border-bottom-color: #cfd8dc;
+}
+
+.category-icon .icon {
+    font-size: 40em;
+    color: #263238;
+}
+
+.category-icon .name {
+    font-size: 10em;
+    text-transform: capitalize;
+    margin-top: 10em;
+    color: #263238;
+}
+
+.categories {
+   font-size: 20em; 
+   color: #455a64;
+   text-align: center;
+   margin-top: 20em;
+   margin-bottom: 10em;
+   text-transform: uppercase;
+   font-weight: 800;
+}
+
+.card-view {
+    border-width: 1;
+    border-color: #cfd8dc;
+    border-radius: 10px;
+    margin: 30px;
+}
+
+.card-view .card-image img {
+    display: block;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.card-view .card-image  {
+    display: block;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    max-height: 150em;
+    height: 150em;
+    overflow: hidden;
+}
+
+.card-view .card-content {
+    padding: 10em;
+}
+
+.card-content .title {
+    font-size: 15em;
+    font-weight: 800;
+    color: #455a64;
+}
+
+.action-image {
+    position:relative;
+    height:450px;
+
+}

@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild  } from '@angular/core';
 import { SearchBar } from "ui/search-bar";
-import { Products } from "../shared/products/products.model";
-import { ProductsService } from "../shared/products/products.service";
+import { Services } from "../shared/services/services.model";
+import { ServicesService } from "../shared/services/services.service";
 import { switchMap } from "rxjs/operators";
 import { RouterExtensions } from 'nativescript-angular/router';
 import { View } from "tns-core-modules/ui/core/view";
@@ -10,30 +10,30 @@ import { TextField } from "tns-core-modules/ui/text-field";
 
 @Component({
 	moduleId: module.id,
-	selector: 'products',
-	templateUrl: 'products.component.html',
-  styleUrls: ['./products.component.css'],
-  providers: [ProductsService]
+	selector: 'services',
+	templateUrl: 'services.component.html',
+  styleUrls: ['./services.component.css'],
+  providers: [ServicesService]
 })
 
-export class ProductsComponent implements OnInit {
-	productList: Array<Products> = [];
+export class ServicesComponent implements OnInit {
+	serviceList: Array<Services> = [];
 
-    product = "";
+    service = "";
     isLoading = false;
     listLoaded = false;
 
 	constructor(
-		private ProductsService: ProductsService,
+		private ServicesService: ServicesService,
 		private routerExtensions: RouterExtensions,
 	) { }
 
     ngOnInit() {
       this.isLoading = true;
-      this.ProductsService.load()
-        .subscribe(loadedProducts => {
-          loadedProducts.forEach((productObject) => {
-            this.productList.unshift(productObject);
+      this.ServicesService.load()
+        .subscribe(loadedServices => {
+          loadedServices.forEach((serviceObject) => {
+            this.serviceList.unshift(serviceObject);
           });
           this.isLoading = false;
           this.listLoaded = true;

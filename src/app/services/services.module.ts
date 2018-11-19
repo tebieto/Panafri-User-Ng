@@ -1,8 +1,9 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
-import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { HttpModule } from '@angular/http';
-import { HomeRoutingModule } from "./home-routing.module";
-import { HomeComponent } from "../home/home.component";
+import { NativeScriptCommonModule } from "nativescript-angular/common";
+import { ServicesRoutingModule } from "./services-routing.module";
+import { ServicesComponent } from "../services/services.component";
+import { NSModuleFactoryLoader } from "nativescript-angular/router";
 import { NativeScriptUISideDrawerModule,  } from "nativescript-ui-sidedrawer/angular";
 import { NativeScriptUIGaugeModule } from "nativescript-ui-gauge/angular";
 import { GridViewModule } from 'nativescript-grid-view/angular';
@@ -16,17 +17,17 @@ import { GridViewModule } from 'nativescript-grid-view/angular';
 
 @NgModule({
     bootstrap: [
-        HomeComponent
+        ServicesComponent
     ],
     imports: [
-        HomeRoutingModule,
+        ServicesRoutingModule,
         NativeScriptUISideDrawerModule,
         NativeScriptUIGaugeModule,
         NativeScriptCommonModule,
         GridViewModule
     ],
     declarations: [
-        HomeComponent,
+        ServicesComponent,
     ],
     schemas: [
         NO_ERRORS_SCHEMA
@@ -35,4 +36,4 @@ import { GridViewModule } from 'nativescript-grid-view/angular';
 /*
 Pass your application module to the bootstrapModule function located in main.ts to start your app
 */
-export class HomeModule { }
+export class ServicesModule { }

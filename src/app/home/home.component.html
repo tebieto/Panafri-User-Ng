@@ -1,4 +1,4 @@
-<ActionBar title="Panafri User">
+<ActionBar title="Panafri User" class="action-bar">
     <NavigationButton icon="res://menu" (tap)="onOpenDrawerTap()"></NavigationButton>
 
 </ActionBar>
@@ -69,60 +69,48 @@
         </GridLayout>
 
         <Label class="categories"  text="Suggested For you"></Label>
-        <GridLayout rows="auto" columns="*, *">
-            <StackLayout class="card-view card card-3" row="0" col="0">
-              <StackLayout class="card-image" (tap)="goToProduct('i')">
-                  <Image src="https://apollo-ireland.akamaized.net/v1/files/8ljfih0ar32j1-NG/image;s=600x1200;q=20"
-                  stretch="fill" decodeWidth="400" decodeHeight="400" loadMode="async"></Image>
-              </StackLayout>
-              <StackLayout class="card-content" (tap)="onOpenDrawerTap()">
-                  <Label class="title" text="Gucci snake"></Label>
-                  <Label class="price" text="N50,000"></Label>
-                  <Label class="loaction" text="Fashion in Berger (1km near you)"></Label>
-                  <Button class="btn btn-primary btn-active" text="Request" (tap)="request()"></Button>
-              </StackLayout>
-            </StackLayout>
-            <StackLayout class="card-view card card-3" row="0" col="1">
-                <StackLayout class="card-image" (tap)="goToProduct('i')">
-                    <Image src="https://apollo-ireland.akamaized.net/v1/files/8ljfih0ar32j1-NG/image;s=600x1200;q=20"
-                    stretch="fill" decodeWidth="400" decodeHeight="400" loadMode="async"></Image>
-                </StackLayout>
-                <StackLayout class="card-content">
-                    <Label class="title" text="Gucci bag"></Label>
-                    <Label class="price" text="N50,000"></Label>
-                    <Label class="loaction" text="Fashion in Berger (3km near you)"></Label>
-                    <Button class="btn btn-primary btn-active" text="Request" (tap)="request()"></Button>
-                </StackLayout>
-              </StackLayout>
-          </GridLayout>
+        <GridLayout class="page">
+                <GridView [items]="productList" colWidth="50%" rowHeight="250">
+                  <ng-template let-item="item" let-odd="odd">
+                    <StackLayout margin="10" [nsRouterLink]="['/item', item.id]" borderColor="#dddddd" borderWidth="2" borderRadius="2" verticalAlignment="stretch" class="list-group-item" [class.odd]="odd">
+                      <StackLayout class="card-content" (tap)="goToProduct('i')">
+                         <Image src="{{item.image}}"  class="action-image"
+                        stretch="aspectFill" decodeWidth="400" decodeHeight="100" loadMode="async"></Image>
+                        <Label class="title" [text]="item.name"></Label>
+                        <Label class="price" text="&#8358;{{item.price}}"></Label>
+                        <Label class="location" [text]="item.location"></Label>
+                        <Button class="btn btn-primary request-button" text="Request" (tap)="request()"></Button>
+                      </StackLayout>
+                    
+                    </StackLayout>
+
+                    
+                        
+                  </ng-template>
+                </GridView>
+              </GridLayout>
 
           <Label class="categories"  text="Suggested Services"></Label>
-        <GridLayout rows="auto" columns="*, *">
-            <StackLayout class="card-view card card-3" row="0" col="0">
-              <StackLayout class="card-image">
-                  <Image src="https://apollo-ireland.akamaized.net/v1/files/8ljfih0ar32j1-NG/image;s=600x1200;q=20"
-                  stretch="fill" decodeWidth="400" decodeHeight="400" loadMode="async"></Image>
-              </StackLayout>
-              <StackLayout class="card-content">
-                  <Label class="title" text="Gucci bag"></Label>
-                  <Label class="price" text="N50,000"></Label>
-                  <Label class="loaction" text="Fashion in Berger (1km near you)"></Label>
-                  <Button class="btn btn-primary btn-active" text="Request" (tap)="request()"></Button>
-              </StackLayout>
-            </StackLayout>
-            <StackLayout class="card-view card card-3" row="0" col="1">
-                <StackLayout class="card-image">
-                    <Image src="https://apollo-ireland.akamaized.net/v1/files/8ljfih0ar32j1-NG/image;s=600x1200;q=20"
-                    stretch="fill" decodeWidth="400" decodeHeight="400" loadMode="async"></Image>
-                </StackLayout>
-                <StackLayout class="card-content">
-                    <Label class="title" text="Gucci bag"></Label>
-                    <Label class="price" text="N50,000"></Label>
-                    <Label class="loaction" text="Fashion in Berger (3km near you)"></Label>
-                    <Button class="btn btn-primary btn-active" text="Request" (tap)="request()"></Button>
-                </StackLayout>
-              </StackLayout>
-          </GridLayout>
+          <GridLayout class="page">
+                <GridView [items]="serviceList" colWidth="50%" rowHeight="250">
+                  <ng-template let-item="item" let-odd="odd">
+                    <StackLayout margin="10" [nsRouterLink]="['/item', item.id]" borderColor="#dddddd" borderWidth="2" borderRadius="2" verticalAlignment="stretch" class="list-group-item" [class.odd]="odd">
+                      <StackLayout class="card-content" (tap)="goToService('i')">
+                         <Image src="{{item.image}}"  class="action-image"
+                        stretch="aspectFill" decodeWidth="400" decodeHeight="100" loadMode="async"></Image>
+                        <Label class="title" [text]="item.name"></Label>
+                        <Label class="price" text="&#8358;{{item.price}}"></Label>
+                        <Label class="location" [text]="item.location"></Label>
+                        <Button class="btn btn-primary request-button" text="Request" (tap)="request()"></Button>
+                      </StackLayout>
+                    
+                    </StackLayout>
+
+                    
+                        
+                  </ng-template>
+                </GridView>
+              </GridLayout>
       </StackLayout>
     </ScrollView>
   </StackLayout>

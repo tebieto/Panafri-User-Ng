@@ -1,10 +1,10 @@
-<ActionBar title="All Products" class="action-bar">
+<ActionBar title="All Services" class="action-bar">
         <NavigationButton android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
     </ActionBar>
     
     <ScrollView>
         <StackLayout>
-            <SearchBar hint="Search Products" (loaded)="sBLoaded($event)" [text]="searchPhrase" (submit)="onSearchSubmit($event)"></SearchBar>
+            <SearchBar hint="Search Services" (loaded)="sBLoaded($event)" [text]="searchPhrase" (submit)="onSearchSubmit($event)"></SearchBar>
             <GridLayout rows="*" columns="*, *, *">
                 <Button class="btn btn-outline" row="0" col="0" class="fab" text="&#xf009; VIEW"></Button>
                 <Button class="btn btn-outline" row="0" col="1" class="fab" text="&#Xf161; SORT"></Button>
@@ -13,10 +13,10 @@
     
     
             <GridLayout class="page">
-                    <GridView [items]="productList" colWidth="50%" rowHeight="250">
+                    <GridView [items]="serviceList" colWidth="50%" rowHeight="250">
                       <ng-template let-item="item" let-odd="odd">
                         <StackLayout margin="10" [nsRouterLink]="['/item', item.id]" borderColor="#dddddd" borderWidth="2" borderRadius="2" verticalAlignment="stretch" class="list-group-item" [class.odd]="odd">
-                          <StackLayout class="card-content" (tap)="goToProduct('i')">
+                          <StackLayout class="card-content" (tap)="goToService('i')">
                              <Image src="{{item.image}}"  class="action-image"
                             stretch="aspectFill" decodeWidth="400" decodeHeight="100" loadMode="async"></Image>
                             <Label class="title" [text]="item.name"></Label>

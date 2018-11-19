@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~6.1.0",
     "@angular/router": "~6.1.0",
     "nativescript-angular": "~6.2.0",
+    "nativescript-grid-view": "^4.1.1",
     "nativescript-theme-core": "~1.0.4",
     "nativescript-ui-gauge": "^3.7.1",
     "nativescript-ui-sidedrawer": "^5.0.0",
