@@ -4,38 +4,34 @@ import { Observable } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
 
 import { Config } from "../config";
-import { Products } from "./products.model";
+import { Categories } from "./categories.model";
 
 @Injectable()
-export class ProductsService {
-    baseUrl = Config.apiUrl + "products";
+export class CategoriesService {
+    baseUrl = Config.apiUrl + "categories";
 
     constructor(private http: Http) { }
 
     load() {
         // Kinvey-specific syntax to sort the groceries by last modified time. Don’t worry about the details here.
-    
+        let params = new URLSearchParams();
+        params.append("sort", "{\"_kmd.lmt\": 1}");
+
         return this.http.get(this.baseUrl).pipe(
             map(res => res.json()),
             map(data => {
-                let productList = [];
-                data.forEach((product) => {
-                    productList.push(new Products(
-                        product.id, 
-                        product.name, 
-                        product.price, 
-                        product.owner,
-                        product.type, 
-                        product.description, 
-                        product.category, 
-                        product.location,
-                        product.status,
-                        product.image, 
-                        product.created_at,
-                        product.updated_at, 
+                let categoryList = [];
+                data.forEach((categories) => {
+                    categoryList.push(new Categories(
+                        categories.id, 
+                        categories.name, 
+                        categories.type,
+                        categories.image, 
+                        categories.created_at,
+                        categories.updated_at, 
                         ));
                 });
-                return productList;
+                return categoryList;
             }),
             catchError(this.handleErrors)
         );

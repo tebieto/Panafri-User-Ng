@@ -1,0 +1,112 @@
+
+
+.drawerContentText {
+    font-size: 13;
+    padding: 10;
+}
+
+.mainContent {
+    background-color: white;
+}
+
+.drawerContentButton {
+    margin: 10;
+    horizontal-align: left;
+}
+
+.sideStackLayout {
+    background-color: #fff;
+    color: #455a64;
+}
+
+.sideTitleStackLayout {
+    /* height: 120em; */
+    padding: 10em;
+    border-bottom-width: 1px;
+    border-bottom-color: #cfd8dc;
+}
+
+.avatar Image {
+    /* width: 40%; */
+    /* border-radius: 50%; */
+}
+
+.sideLabel {
+    padding: 15;
+    font-size: 20em
+}
+
+.sideLightGrayLabel {
+    background-color: #fff;
+}
+
+.category-icon {
+    color: black;
+    padding: 15em;
+    text-align: center;
+    border-bottom-width: 1;
+    border-bottom-color: #cfd8dc;
+}
+
+.category-icon .icon {
+    font-size: 40em;
+    color: #263238;
+}
+
+.category-icon .name {
+    font-size: 10em;
+    text-transform: capitalize;
+    margin-top: 10em;
+    color: #263238;
+}
+
+.categories {
+   font-size: 20em; 
+   color: #455a64;
+   text-align: center;
+   margin-top: 20em;
+   margin-bottom: 10em;
+   text-transform: uppercase;
+   font-weight: 800;
+}
+
+.card-view {
+    border-width: 1;
+    border-color: #cfd8dc;
+    border-radius: 10px;
+    margin: 30px;
+}
+
+.card-view .card-image img {
+    display: block;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.card-view .card-image  {
+    display: block;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    max-height: 150em;
+    height: 150em;
+    overflow: hidden;
+}
+
+.card-view .card-content {
+    padding: 10em;
+}
+
+.card-content .title {
+    font-size: 15em;
+    font-weight: 800;
+    color: #455a64;
+}

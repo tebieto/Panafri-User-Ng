@@ -1,15 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Products } from "../shared/products/products.model";
-import { ProductsService } from "../shared/products/products.service";
-import { Services } from "../shared/services/services.model";
-import { ServicesService } from "../shared/services/services.service";
+import { Products } from "../../shared/products/products.model";
+import { ProductsService } from "../../shared/products/products.service";
+import { Services } from "../../shared/services/services.model";
+import { ServicesService } from "../../shared/services/services.service";
 import { RadSideDrawerComponent, SideDrawerType } from "nativescript-ui-sidedrawer/angular";
-import { SearchBar } from "ui/search-bar";
+import { SearchBar } from "tns-core-modules/ui/search-bar";
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from "tns-core-modules/ui/page";
-import { UserService } from "../shared/user/user.service";
-import { User } from "../shared/user/user.model";
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -17,7 +15,7 @@ import { ActivatedRoute } from '@angular/router';
   moduleId: module.id,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers: [ProductsService, ServicesService, UserService]
+  providers: [ProductsService, ServicesService]
 })
 
 export class HomeComponent implements OnInit {
@@ -25,7 +23,6 @@ export class HomeComponent implements OnInit {
 
   productList: Array<Products> = [];
   serviceList: Array<Services> = [];
-  userList: Array<User> = [];
     product = "";
     service = "";
     user = "";
@@ -33,12 +30,11 @@ export class HomeComponent implements OnInit {
     AuthAvatar = "";
     isLoading = false;
     listLoaded = false;
-    TokenParams= "";
+    TokenParams= [];
 
 	constructor(
     private ServiceService: ServicesService,
     private ProductsService: ProductsService,
-    private UserService: UserService,
 		public router: Router,
     private routerExtensions: RouterExtensions,
     private page: Page,
@@ -49,25 +45,6 @@ export class HomeComponent implements OnInit {
     this.page.actionBarHidden = false;
     this.isLoading = true;
 
-    this.route.queryParams.subscribe(params => {
-      
-        this.TokenParams=params.jwt
-
-        this.UserService.load(params)
-        .subscribe(loadedUser => {
-          this.AuthName=loadedUser[0].name
-          this.AuthAvatar=loadedUser[0].avatar
-          loadedUser.forEach((userObject) => {
-            this.userList.unshift(userObject);
-            
-          },
-          (error) => alert("Unfortunately we could not load user.")
-      
-          );
-          this.isLoading = false;
-          this.listLoaded = true;
-        });
-      });
       
       this.ProductsService.load()
         .subscribe(loadedProducts => {
@@ -115,8 +92,12 @@ export class HomeComponent implements OnInit {
     this.routerExtensions.navigate(['products', i]);
   }
 
-  goToRequests() {
-    this.routerExtensions.navigate(['requests'], { queryParams: { jwt: this.TokenParams }});
+  request(item) {
+
+   var Product= this.productList.find(p => {
+    return p.id===item
+    });
+    this.router.navigate(["/RequestLogin"], { queryParams: Product });
   }
 
   goToCategories() {
@@ -134,47 +115,30 @@ export class HomeComponent implements OnInit {
     this.routerExtensions.navigate(['services']);
   }
 
-  goToNotifications() {
-    this.routerExtensions.navigate(['notifications']);
-  }
-
-  logout() {
+  Login() {
     this.routerExtensions.navigate(['login']);
   }
 
-  goToProfile() {
-    this.routerExtensions.navigate(['profile'])
+  Register() {
+    this.routerExtensions.navigate(['signup'])
   }
 
-  public searchPhrase: string;
+    public searchPhrase: string;
 
-  onSearchSubmit(args) {
-
-    let searchBar = <SearchBar>args.object;
+    public onSearchSubmit(args) {
+        let searchBar = <SearchBar>args.object;
         let active =searchBar.text
         this.routerExtensions.navigate(['search', active]);
-
-  }
-
-  request(item) {
-
-    var Product= this.productList.find(p => {
-     return p.id===item
-     });
-     let result = {token: this.TokenParams}
-     const param = Object.assign({}, result, Product);
-     this.router.navigate(["/request"], { queryParams: param });
-   }
-
-  public sBLoaded(args){
-    var searchbar:SearchBar = <SearchBar>args.object;
-    searchbar.android.clearFocus();
-
-  }
-
-  public onTextChanged(args) {
-       
         
-  }
+    }
 
+    public sBLoaded(args){
+      var searchbar:SearchBar = <SearchBar>args.object;
+      searchbar.android.clearFocus();
+  
+    }
+
+    public onTextChanged(args) {
+       
+    }
 }

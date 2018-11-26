@@ -1,0 +1,23 @@
+<ActionBar title="Request {{PageTitle}}" class="action-bar">
+        <NavigationButton android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
+  </ActionBar>
+    
+  <GridLayout rows="auto, *">
+
+    <RadListView row="1" [items]="requestList" [class.visible]="listLoaded"
+    swipeActions="true" (itemSwipeProgressStarted)="onSwipeCellStarted($event)">
+  
+    <ng-template let-item="item">
+      <Label [text]="item.name" class="p-15"></Label>
+    </ng-template>
+  
+    <GridLayout *tkListItemSwipeTemplate columns="*, auto">
+        <StackLayout id="delete-view" col="1"  class="delete-view">
+          <Image src="~/images/delete.png"></Image>
+        </StackLayout>
+    </GridLayout>
+  
+  </RadListView>
+  
+  <ActivityIndicator [busy]="isLoading" [visibility]="isLoading ? 'visible' : 'collapse'" row="1" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+  </GridLayout>

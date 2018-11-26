@@ -1,9 +1,9 @@
-export class Products {
+export class Category {
 	constructor(
 		public id: number, 
 		public name: string, 
 		public price: number, 
-		public owner: object,
+		public owner: number,
 		public type: number, 
 		public description: string, 
 		public category: string, 
@@ -11,6 +11,6 @@ export class Products {
 		public status: number,
 		public image: string, 
 		public created_at: string,
-		public updated_at: string, 
+		public updated_at: string,  
 		) {}
   }

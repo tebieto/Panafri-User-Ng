@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild  } from '@angular/core';
 import { SearchBar } from "ui/search-bar";
-import { Products } from "../shared/products/products.model";
-import { ProductsService } from "../shared/products/products.service";
+import { Categories } from "../shared/categories/categories.model";
+import { CategoriesService } from "../shared/categories/categories.service";
 import { switchMap } from "rxjs/operators";
 import { RouterExtensions } from 'nativescript-angular/router';
 import { View } from "tns-core-modules/ui/core/view";
@@ -10,36 +10,37 @@ import { TextField } from "tns-core-modules/ui/text-field";
 
 @Component({
 	moduleId: module.id,
-	selector: 'products',
-	templateUrl: 'products.component.html',
-  styleUrls: ['./products.component.css'],
-  providers: [ProductsService]
+	selector: 'categories',
+	templateUrl: 'categories.component.html',
+  styleUrls: ['./categories.component.css'],
+  providers: [CategoriesService]
 })
 
-export class ProductsComponent implements OnInit {
-	productList: Array<Products> = [];
-
-    product = "";
+export class CategoriesComponent implements OnInit {
+	categoryList: Array<Categories> = [];
+    category = "";
     isLoading = false;
     listLoaded = false;
 
 	constructor(
-		private ProductsService: ProductsService,
-		private routerExtensions: RouterExtensions,
+		private CategoriesService: CategoriesService,
+    private routerExtensions: RouterExtensions,
 	) { }
 
     ngOnInit() {
       this.isLoading = true;
-      /*
-      this.ProductsService.load()
-        .subscribe(loadedProducts => {
-          loadedProducts.forEach((productObject) => {
-            this.productList.unshift(productObject);
+      this.CategoriesService.load()
+        .subscribe(loadedCategories => {
+          loadedCategories.forEach((categoryObject) => {
+            this.categoryList.unshift(categoryObject);
           });
           this.isLoading = false;
           this.listLoaded = true;
         });
-        */
+    }
+
+    goToCategory(name: string) {
+      this.routerExtensions.navigate(['category', name]);
     }
 
 	public sBLoaded(args) {

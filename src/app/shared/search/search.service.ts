@@ -4,38 +4,40 @@ import { Observable } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
 
 import { Config } from "../config";
-import { Products } from "./products.model";
+import { Search } from "./search.model";
 
 @Injectable()
-export class ProductsService {
-    baseUrl = Config.apiUrl + "products";
+export class SearchService {
+    baseUrl = Config.apiUrl + "search/";
 
     constructor(private http: Http) { }
 
-    load() {
+    load(Active) {
         // Kinvey-specific syntax to sort the groceries by last modified time. Don’t worry about the details here.
-    
-        return this.http.get(this.baseUrl).pipe(
+        let params = new URLSearchParams();
+        params.append("sort", "{\"_kmd.lmt\": 1}");
+
+        return this.http.get(this.baseUrl + Active).pipe(
             map(res => res.json()),
             map(data => {
-                let productList = [];
-                data.forEach((product) => {
-                    productList.push(new Products(
-                        product.id, 
-                        product.name, 
-                        product.price, 
-                        product.owner,
-                        product.type, 
-                        product.description, 
-                        product.category, 
-                        product.location,
-                        product.status,
-                        product.image, 
-                        product.created_at,
-                        product.updated_at, 
+                let searchList = [];
+                data.forEach((search) => {
+                    searchList.push(new Search(
+                        search.id, 
+                        search.name, 
+                        search.price, 
+                        search.owner,
+                        search.type, 
+                        search.description, 
+                        search.category, 
+                        search.location,
+                        search.status,
+                        search.image, 
+                        search.created_at,
+                        search.updated_at, 
                         ));
                 });
-                return productList;
+                return searchList;
             }),
             catchError(this.handleErrors)
         );
