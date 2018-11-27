@@ -6,7 +6,7 @@ import { CategoryComponent } from "./categories/category/category.component";
 
 
 const routes: Routes = [
-    { path: "", redirectTo: "/welcome", pathMatch: "full" },
+    { path: "", redirectTo: "/login", pathMatch: "full" },
     { path: "home", loadChildren: "~/app/home/home.module#HomeModule" },
     { path: "welcome", loadChildren: "~/app/welcome/home/home.module#HomeModule" },
     { path: "products", loadChildren: "~/app/products/products.module#ProductsModule" },

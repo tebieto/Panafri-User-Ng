@@ -32,8 +32,8 @@ export class RequestComponent implements OnInit {
   SellerPhone= ""
   PageTitle=""
   token=""
-  isLoading = false;
-  listLoaded = true;
+  isLoading = true;
+  listLoaded = false;
   isRequesting = true;
   constructor(private router: Router, 
     private requestService: RequestService,
@@ -48,6 +48,8 @@ export class RequestComponent implements OnInit {
   }
 
   ngOnInit() {
+  this.isLoading = true;
+  this.listLoaded = false;
     this.page.actionBarHidden = false;
     this.route.queryParams.subscribe(params => {
       this.token= params.token
@@ -60,7 +62,7 @@ export class RequestComponent implements OnInit {
         this.SellerName = loadedSeller[0].name
         this.SellerAvatar = loadedSeller[0].avatar
         this.SellerPhone = loadedSeller[0].phone
-        console.log(this.SellerPhone)
+        
       })
 
       this.UserService.load(token)
@@ -68,22 +70,24 @@ export class RequestComponent implements OnInit {
         this.request.product_id= params.id
         this.request.buyer_id = loadedUser[0].user.id
         this.request.type= params.type
-        this.request.seller_id= params.owner.id
+        this.request.seller_id= params.owner
         this.request.delivery= 1
         this.request.location= "Bariga"
         this.request.token= params.token
+        this.Request()
 
         this.AuthName=loadedUser[0].user.name
         this.AuthAvatar=loadedUser[0].user.avatar
         loadedUser.forEach((userObject) => {
-          this.userList.unshift(userObject);
+        this.userList.unshift(userObject);
           
         },
         (error) => alert("Unfortunately we could not load user.")
     
         );
-        this.isLoading = false;
-        this.listLoaded = true;
+
+        
+        
       });
 
     
@@ -94,17 +98,17 @@ export class RequestComponent implements OnInit {
 
   
   Request() {
-    this.isLoading = true;
-    
     this.requestService.request(this.request)
       .subscribe(
         (result) => {
           console.log(result)
-          
           this.isLoading = false;
+          this.listLoaded = true;
+        
          
       },
         (error) => {
+          
           alert("Unfortunately we could not send request.")
         } 
       );
@@ -121,11 +125,15 @@ export class RequestComponent implements OnInit {
   }
 
   public goBack() {
-		this.routerExtensions.backToPreviousPage();
+		this.router.navigate(["/home"], { queryParams: { jwt: this.token } });
   }
 
   toggleDisplay() {
     this.isRequesting = !this.isRequesting;
+  }
+
+  call() {
+    
   }
 
   

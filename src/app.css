@@ -162,3 +162,18 @@ components that have the btn class name.
     height:450px;
 
 }
+
+.RequestPage {
+    opacity: 0;
+  }
+
+.visible {
+    animation-name: show;
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
+  }
+  @keyframes show {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+

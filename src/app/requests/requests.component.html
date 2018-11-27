@@ -5,18 +5,21 @@
 
 <GridLayout rows="auto, *">
 
-  <RadListView row="1" [items]="requestList" [class.visible]="listLoaded"
-  swipeActions="true" (itemSwipeProgressStarted)="onSwipeCellStarted($event)">
+  <RadListView row="1" [items]="requestList" [class.visible]="listLoaded">
 
   <ng-template let-item="item">
-    <Label [text]="item.product.name" class="p-15"></Label>
-  </ng-template>
-
-  <GridLayout *tkListItemSwipeTemplate columns="*, auto">
-      <StackLayout id="delete-view" col="1"  class="delete-view">
-        <Image src="~/images/delete.png"></Image>
+      <StackLayout class="item">
+          <GridLayout columns="*, 125">
+              <StackLayout col="0"  padding="10">
+                  <Label [text]="item.product.name"></Label>
+              </StackLayout>
+              <StackLayout col="1" padding="10" >
+                  <Image [src]="item.product.image" class="image img-circle"></Image>
+              </StackLayout>
+          </GridLayout>
+          <StackLayout height="1" backgroundColor="lightgray"></StackLayout>
       </StackLayout>
-  </GridLayout>
+  </ng-template>
 
 </RadListView>
 
