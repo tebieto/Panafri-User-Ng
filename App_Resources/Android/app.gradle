@@ -12,6 +12,8 @@
 android {  
   defaultConfig {  
     generatedDensities = []
+    applicationId = "app.panafri.user"
+    minSdkVersion 19    // This over here
   }  
   aaptOptions {  
     additionalParameters "--no-version-vectors"  

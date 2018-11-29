@@ -11,6 +11,7 @@ import { Seller } from "../../../shared/seller/seller.model";
 import { RouterExtensions } from 'nativescript-angular/router';
 import { View } from "tns-core-modules/ui/core/view";
 import { ListViewEventData, RadListView } from "nativescript-ui-listview";
+import * as phone from 'nativescript-phone';
 
 
 @Component({
@@ -133,7 +134,7 @@ export class RequestComponent implements OnInit {
   }
 
   call() {
-    
+    phone.dial(String(this.SellerPhone), true)
   }
 
   

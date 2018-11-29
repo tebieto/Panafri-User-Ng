@@ -1,6 +1,6 @@
 {
   "nativescript": {
-    "id": "org.nativescript.panafriuser",
+    "id": "app.panafri.user",
     "tns-ios": {
       "version": "5.0.0"
     },
@@ -23,6 +23,9 @@
     "@angular/router": "~6.1.0",
     "nativescript-angular": "~6.2.0",
     "nativescript-grid-view": "^4.1.1",
+    "nativescript-image-cache-it": "^4.0.9",
+    "nativescript-phone": "^1.4.0",
+    "nativescript-plugin-firebase": "^7.4.2",
     "nativescript-theme-core": "~1.0.4",
     "nativescript-ui-gauge": "^3.7.1",
     "nativescript-ui-listview": "^4.0.0",

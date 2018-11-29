@@ -4,6 +4,7 @@ import { LoginService } from "../../shared/authentication/login/login.service";
 import { Router } from "@angular/router";
 import { Page } from "tns-core-modules/ui/page";
 import { RouterExtensions } from 'nativescript-angular/router';
+import { messaging, Message } from "nativescript-plugin-firebase/messaging";
 
 
 @Component({
@@ -15,6 +16,7 @@ import { RouterExtensions } from 'nativescript-angular/router';
 })
 export class LoginComponent implements OnInit {
   user: Login;
+  DeviceToken=""
   isLoggingIn = true;
   isLoading = false;
   constructor(private router: Router, 
@@ -30,6 +32,27 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.page.actionBarHidden = false;
+
+    messaging.getCurrentPushToken()
+    .then(token => {
+      this.DeviceToken=token
+      console.log(this.DeviceToken)
+    });
+    messaging.registerForPushNotifications({
+      onPushTokenReceivedCallback: (token: string): void => {
+        console.log("Firebase plugin received a push token: " + token);
+      },
+    
+      onMessageReceivedCallback: (message: Message) => {
+        console.log("Push message received: " + message.title);
+      },
+    
+      // Whether you want this plugin to automatically display the notifications or just notify the callback. Currently used on iOS only. Default true.
+      showNotifications: true,
+    
+      // Whether you want this plugin to always handle the notifications when the app is in foreground. Currently used on iOS only. Default false.
+      showNotificationsWhenInForeground: true
+    }).then(() => console.log("Registered for push"));
   }
 
 
