@@ -18,7 +18,8 @@ export class SignupService {
                 email: signup.email,
                 phone: signup.phone,
                 password: signup.password,
-                password_confirmation: signup.password_confirmation
+                password_confirmation: signup.password_confirmation,
+                deviceToken: signup.deviceToken
             }),
             { headers: this.getCommonHeaders() }
         ).pipe(

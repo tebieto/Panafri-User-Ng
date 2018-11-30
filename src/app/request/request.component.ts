@@ -12,6 +12,12 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import { View } from "tns-core-modules/ui/core/view";
 import { ListViewEventData, RadListView } from "nativescript-ui-listview";
 import * as phone from 'nativescript-phone';
+import { messaging, Message } from "nativescript-plugin-firebase/messaging";
+import { LocalNotifications } from "nativescript-local-notifications";
+import { Observable } from "tns-core-modules/data/observable";
+import { getString,setString,clear} from "tns-core-modules/application-settings";
+import { Notification } from "../shared/notification/notification.model";
+import {  NotificationService } from "../shared/notification/notification.service";
 
 
 @Component({
@@ -19,32 +25,41 @@ import * as phone from 'nativescript-phone';
 	selector: 'request',
 	templateUrl: 'request.component.html',
   styleUrls: ['./request.component.css'],
-  providers: [RequestService, UserService, SellerService]
+  providers: [RequestService, UserService, SellerService, NotificationService]
 })
 export class RequestComponent implements OnInit {
   userList: Array<User> = [];
   sellerList: Array<Seller> = [];
   requestList= []
   request: Request;
+  not: Notification;
   AuthName= ""
   AuthAvatar= ""
   SellerName= ""
   SellerAvatar= ""
   SellerPhone= ""
   PageTitle=""
-  token=""
+  productName=""
+  productImage=""
+  token=getString("token")
+  SellerDeviceToken=""
+  NotTitle=""
+  NotBody=""
+  NotImage=""
   isLoading = true;
   listLoaded = false;
   isRequesting = true;
   constructor(private router: Router, 
     private requestService: RequestService,
     private UserService: UserService,
-    private SellerService: SellerService,  
+    private SellerService: SellerService,
+    private notificationService: NotificationService,  
     private page: Page,
     private route: ActivatedRoute,
     private routerExtensions: RouterExtensions,
     ) {
     this.request = new Request();
+    this.not = new Notification();
   
   }
 
@@ -55,26 +70,29 @@ export class RequestComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.token= params.token
       this.requestList.push(params)
-      const token = {jwt: params.token}
+      const token = getString("token")
       this.PageTitle= params.name
+      this.productName= params.name
+      this.productImage= params.image
 
       this.SellerService.load(params)
       .subscribe(loadedSeller => {
         this.SellerName = loadedSeller[0].name
         this.SellerAvatar = loadedSeller[0].avatar
         this.SellerPhone = loadedSeller[0].phone
-        
+        this.SellerDeviceToken = loadedSeller[0].profile.about
       })
 
       this.UserService.load(token)
       .subscribe(loadedUser => {
+        console.log(loadedUser)
         this.request.product_id= params.id
         this.request.buyer_id = loadedUser[0].user.id
         this.request.type= params.type
         this.request.seller_id= params.owner
         this.request.delivery= 1
-        this.request.location= "Bariga"
-        this.request.token= params.token
+        this.request.location= "Unknown"
+        this.request.token= getString("token")
         this.Request()
 
         this.AuthName=loadedUser[0].user.name
@@ -103,6 +121,10 @@ export class RequestComponent implements OnInit {
       .subscribe(
         (result) => {
           console.log(result)
+
+          
+        this.notify()
+
           this.isLoading = false;
           this.listLoaded = true;
         
@@ -111,9 +133,29 @@ export class RequestComponent implements OnInit {
         (error) => {
           
           alert("Unfortunately we could not send request.")
+          this.routerExtensions.navigate(['login']);
         } 
       );
       
+  }
+
+  notify() {
+
+        this.not.title = "New Request";
+        this.not.body = this.AuthName + " requested " + this.productName;
+        this.not.image = this.productImage;
+        this.not.app = "partner";
+        this.not.icon = this.AuthAvatar;
+        this.not.deviceToken = getString("deviceToken");
+
+        this.notificationService.notification(this.not)
+    .subscribe(
+      (result) => {
+       console.log(result)
+    },
+      (error) => alert("Unfortunately we could not push notification.")
+    );
+
   }
 
   onSwipeCellStarted(args: ListViewEventData) {

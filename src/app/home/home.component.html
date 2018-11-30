@@ -15,9 +15,9 @@
         <Label text="&#xf59d; &nbsp; Products" (tap)="goToProducts()" class="sideLabel fab icon"></Label>
         <Label text="&#xf552; &nbsp; Services" (tap)="goToServices()" class="sideLabel fab icon"></Label>
         <Label text="&#xf27a; &nbsp; Requests"  class="sideLabel fab icon" (tap)="goToRequests()"></Label>
-        <Label text="&#xf0f3; &nbsp; Notifications" (tap)="goToNotifications()" class="sideLabel fab icon"></Label>
+       <!-- <Label text="&#xf0f3; &nbsp; Notifications" (tap)="goToNotifications()" class="sideLabel fab icon"></Label>
         <Label text="&#xf2bd; &nbsp; My Profile" (tap)="goToProfile()" class="sideLabel fab icon"></Label>
-        <Label text="&#xf013; &nbsp; Settings" class="sideLabel fab icon"></Label>
+       <Label text="&#xf013; &nbsp; Settings" class="sideLabel fab icon"></Label>-->
         <Label text="&#xf2f5; &nbsp; Log out" (tap)="logout()" class="sideLabel fab icon"></Label>
       </StackLayout>
     </ScrollView>
@@ -79,7 +79,7 @@
                         <Label class="title" [text]="item.name"></Label>
                         <Label class="price" text="&#8358;{{item.price}}"></Label>
                         <Label class="location" [text]="item.location"></Label>
-                        <Button class="btn btn-primary request-button" text="Request" (tap)="request(item.id)"></Button>
+                        <Button class="btn btn-primary request-button" text="Request" (tap)="requestProduct(item.id)"></Button>
                       </StackLayout>
                     
                     </StackLayout>
@@ -101,7 +101,7 @@
                         <Label class="title" [text]="item.name"></Label>
                         <Label class="price" text="&#8358;{{item.price}}"></Label>
                         <Label class="location" [text]="item.location"></Label>
-                        <Button class="btn btn-primary request-button" text="Request" (tap)="request(item.id)"></Button>
+                        <Button class="btn btn-primary request-button" text="Request" (tap)="requestService(item.id)"></Button>
                       </StackLayout>
                     
                     </StackLayout>

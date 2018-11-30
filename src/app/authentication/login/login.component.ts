@@ -1,11 +1,14 @@
 import { Component, OnInit } from "@angular/core";
+import { Color } from "tns-core-modules/color";
 import { Login } from "../../shared/authentication/login/login.model";
 import { LoginService } from "../../shared/authentication/login/login.service";
 import { Router } from "@angular/router";
 import { Page } from "tns-core-modules/ui/page";
 import { RouterExtensions } from 'nativescript-angular/router';
 import { messaging, Message } from "nativescript-plugin-firebase/messaging";
-
+import { LocalNotifications } from "nativescript-local-notifications";
+import { Observable } from "tns-core-modules/data/observable";
+import { getString,setString,clear} from "tns-core-modules/application-settings";
 
 @Component({
 	moduleId: module.id,
@@ -17,6 +20,10 @@ import { messaging, Message } from "nativescript-plugin-firebase/messaging";
 export class LoginComponent implements OnInit {
   user: Login;
   DeviceToken=""
+  NotTitle=""
+  NotBody=""
+  NotImage=""
+  NotIcon=""
   isLoggingIn = true;
   isLoading = false;
   constructor(private router: Router, 
@@ -27,32 +34,62 @@ export class LoginComponent implements OnInit {
     this.user = new Login();
     this.user.email = "tebieto@gmail.com";
     this.user.password = "1223454allu4";
-  
+    this.user.deviceToken= this.DeviceToken
   }
 
   ngOnInit() {
+    
+    console.log("device token:" + getString("deviceToken"))
+    console.log("token:" + getString("token"))
     this.page.actionBarHidden = false;
-
+  
     messaging.getCurrentPushToken()
-    .then(token => {
-      this.DeviceToken=token
-      console.log(this.DeviceToken)
-    });
+      .then(token => {
+        this.DeviceToken=token
+        setString("deviceToken", this.DeviceToken);
+      });
+
     messaging.registerForPushNotifications({
       onPushTokenReceivedCallback: (token: string): void => {
         console.log("Firebase plugin received a push token: " + token);
       },
     
       onMessageReceivedCallback: (message: Message) => {
-        console.log("Push message received: " + message.title);
+        if(message.data.app=="partner"){return}
+       console.log("Push message received: " + message.data.body);
+       this.NotTitle=message.data.title
+       this.NotBody=message.data.body
+       this.NotImage=message.data.image
+       this.NotIcon=message.data.icon
+       LocalNotifications.schedule([{
+        id: 1,
+        title: this.NotTitle,
+        body: this.NotBody,
+        badge: 1,
+        ongoing: true, // makes the notification ongoing (Android only)
+        icon: this.NotIcon,
+        image: this.NotImage,
+        thumbnail: true,
+        at: new Date(new Date().getTime() + (10 * 1000)) // 10 seconds from now
+      }]).then(
+          function() {
+            console.log("Notification scheduled");
+          },
+          function(error) {
+            console.log("scheduling error: " + error);
+          }
+      )
+      
       },
     
       // Whether you want this plugin to automatically display the notifications or just notify the callback. Currently used on iOS only. Default true.
       showNotifications: true,
     
       // Whether you want this plugin to always handle the notifications when the app is in foreground. Currently used on iOS only. Default false.
-      showNotificationsWhenInForeground: true
+     
     }).then(() => console.log("Registered for push"));
+    
+    
   }
 
 
@@ -64,7 +101,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (result) => {
           this.isLoading = false;
-         
+          setString("token", result.token);
           this.router.navigate(["/home"], { queryParams: { jwt: result.token } });
       },
         (error) => alert("Unfortunately we could not find your account.")

@@ -9,13 +9,19 @@ import { SearchBar } from "tns-core-modules/ui/search-bar";
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from "tns-core-modules/ui/page";
 import { ActivatedRoute } from '@angular/router';
+import { messaging, Message } from "nativescript-plugin-firebase/messaging";
+import { LocalNotifications } from "nativescript-local-notifications";
+import { Observable } from "tns-core-modules/data/observable";
+import { getString,setString,clear} from "tns-core-modules/application-settings";
+import { UserService } from "../../shared/user/user.service";
+import { User } from "../../shared/user/user.model";
 
 @Component({
   selector: 'home',
   moduleId: module.id,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers: [ProductsService, ServicesService]
+  providers: [ProductsService, ServicesService, UserService]
 })
 
 export class HomeComponent implements OnInit {
@@ -23,6 +29,11 @@ export class HomeComponent implements OnInit {
 
   productList: Array<Products> = [];
   serviceList: Array<Services> = [];
+  DeviceToken=""
+  NotTitle=""
+  NotBody=""
+  NotImage=""
+  NotIcon=""
     product = "";
     service = "";
     user = "";
@@ -35,6 +46,7 @@ export class HomeComponent implements OnInit {
 	constructor(
     private ServiceService: ServicesService,
     private ProductsService: ProductsService,
+    private UserService: UserService,
 		public router: Router,
     private routerExtensions: RouterExtensions,
     private page: Page,
@@ -42,7 +54,68 @@ export class HomeComponent implements OnInit {
 	) { }
 
   ngOnInit() {
+    console.log("device token:" + getString("deviceToken"))
+    console.log("token:" + getString("token"))
     this.page.actionBarHidden = false;
+  
+    messaging.getCurrentPushToken()
+      .then(token => {
+        this.DeviceToken=token
+        setString("deviceToken", this.DeviceToken);
+      });
+
+    messaging.registerForPushNotifications({
+      onPushTokenReceivedCallback: (token: string): void => {
+        console.log("Firebase plugin received a push token: " + token);
+      },
+    
+      onMessageReceivedCallback: (message: Message) => {
+        if(message.data.app=="partner"){return}
+       console.log("Push message received: " + message.data.body);
+       this.NotTitle=message.data.title
+       this.NotBody=message.data.body
+       this.NotImage=message.data.image
+       this.NotIcon=message.data.icon
+       LocalNotifications.schedule([{
+        id: 1,
+        title: this.NotTitle,
+        body: this.NotBody,
+        badge: 1,
+        ongoing: true, // makes the notification ongoing (Android only)
+        icon: this.NotIcon,
+        image: this.NotImage,
+        thumbnail: true,
+        at: new Date(new Date().getTime() + (10 * 1000)) // 10 seconds from now
+      }]).then(
+          function() {
+            console.log("Notification scheduled");
+          },
+          function(error) {
+            console.log("scheduling error: " + error);
+          }
+      )
+      
+      },
+    
+      // Whether you want this plugin to automatically display the notifications or just notify the callback. Currently used on iOS only. Default true.
+      showNotifications: true,
+    
+      // Whether you want this plugin to always handle the notifications when the app is in foreground. Currently used on iOS only. Default false.
+     
+    }).then(() => console.log("Registered for push"));
+    
+
+    this.UserService.load(getString("token"))
+        .subscribe(loadedUser => {      
+            if(loadedUser[0].status) {
+              setString("token", "")
+            } else if(loadedUser[0].user) {
+            this.router.navigate(["/home"], { queryParams: { jwt: getString("token") } });
+            }
+          },
+          (error) => {
+          });
+
     this.isLoading = true;
 
       

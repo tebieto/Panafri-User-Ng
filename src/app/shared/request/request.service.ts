@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Http, Headers, Response, RequestOptions } from "@angular/http";
 import { Observable } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
+import { getString,setString,clear} from "tns-core-modules/application-settings";
 
 import { Request } from "./request.model";
 import { Config } from "../config";
@@ -9,9 +10,9 @@ import { Config } from "../config";
 @Injectable()
 export class RequestService {
     constructor(private http: Http) { }
-    token= ""
+    token= getString("token")
     request(request: Request) {
-         this.token = "Bearer" + request.token
+         this.token = "Bearer" + getString("token")
         let headers = new Headers({ "Authorization": this.token });
         let options = new RequestOptions({ headers: headers });
         return this.http.post(

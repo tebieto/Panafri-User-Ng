@@ -3,21 +3,25 @@ import { Http, Headers, Response } from "@angular/http";
 import { Observable } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
 
-import { Login } from "./login.model";
-import { Config } from "../../config";
+import { Notification } from "./notification.model";
+import { Config } from "../config";
 
 @Injectable()
-export class LoginService {
+export class NotificationService {
     constructor(private http: Http) { }
-    
-    login(login: Login) {
+    data={}
+    notification(notification: Notification) {
+        this.data = { "data": {
+            "title" : notification.title,
+            "body"  : notification.body,
+            "app"  : "user",
+            "image"  : notification.image,
+        },
+        "to" : notification.deviceToken
+    }
+
         return this.http.post(
-            Config.apiUrl + "login",
-            JSON.stringify({
-                email: login.email,
-                password: login.password,
-                deviceToken: login.deviceToken,
-            }),
+            Config.fcmUrl,this.data,
             { headers: this.getCommonHeaders() }
         ).pipe(
             map(response => response.json()),
@@ -27,8 +31,10 @@ export class LoginService {
     }
 
     getCommonHeaders() {
+        console.log(Config.fcmAuth)
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
+        headers.append("Authorization", Config.fcmAuth);
         return headers;
     }
 

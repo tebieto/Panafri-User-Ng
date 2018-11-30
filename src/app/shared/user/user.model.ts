@@ -10,5 +10,7 @@ export class User {
        public phone: string,
        public created_at: string,
        public updated_at:string,
+       
+
     ){}
 }

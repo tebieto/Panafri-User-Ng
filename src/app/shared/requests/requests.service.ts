@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Http, Headers, Response, RequestOptions, URLSearchParams } from "@angular/http";
 import { Observable } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
+import { getString,setString,clear} from "tns-core-modules/application-settings";
 
 import { Config } from "../config";
 import { Requests } from "./requests.model";
@@ -15,7 +16,7 @@ export class RequestsService {
     load(params) {
         // Kinvey-specific syntax to sort the groceries by last modified time. Don’t worry about the details here.
         
-        let headers = new Headers({ "Authorization": "Bearer " + params["jwt"] });
+        let headers = new Headers({ "Authorization": "Bearer " + getString("token") });
         let options = new RequestOptions({ headers: headers });
         
         return this.http.get(this.baseUrl,options).pipe(

@@ -11,6 +11,7 @@ import { Page } from "tns-core-modules/ui/page";
 import { UserService } from "../shared/user/user.service";
 import { User } from "../shared/user/user.model";
 import { ActivatedRoute } from '@angular/router';
+import { getString,setString,clear} from "tns-core-modules/application-settings";
 
 @Component({
   selector: 'home',
@@ -51,7 +52,7 @@ export class HomeComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       
-        this.TokenParams=params.jwt
+        this.TokenParams=getString("token")
 
         this.UserService.load(params)
         .subscribe(loadedUser => {
@@ -61,7 +62,10 @@ export class HomeComponent implements OnInit {
             this.userList.unshift(userObject);
             
           },
-          (error) => alert("Unfortunately we could not load user.")
+          (error) => {
+            alert("Unfortunately we could not retireve your profile.")
+            this.routerExtensions.navigate(['login']);
+          }
       
           );
           this.isLoading = false;
@@ -139,6 +143,7 @@ export class HomeComponent implements OnInit {
   }
 
   logout() {
+    setString("token", "")
     this.routerExtensions.navigate(['login']);
   }
 
@@ -156,13 +161,23 @@ export class HomeComponent implements OnInit {
 
   }
 
-  request(item) {
+  requestProduct(item) {
 
     var Product= this.productList.find(p => {
      return p.id===item
      });
      let result = {token: this.TokenParams}
      const param = Object.assign({}, result, Product);
+     this.router.navigate(["/request"], { queryParams: param });
+   }
+
+   requestService(item) {
+
+    var Service= this.serviceList.find(s => {
+     return s.id===item
+     });
+     let result = {token: this.TokenParams}
+     const param = Object.assign({}, result, Service);
      this.router.navigate(["/request"], { queryParams: param });
    }
 

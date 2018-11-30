@@ -30,7 +30,7 @@ export class ProductsComponent implements OnInit {
 
     ngOnInit() {
       this.isLoading = true;
-      /*
+      
       this.ProductsService.load()
         .subscribe(loadedProducts => {
           loadedProducts.forEach((productObject) => {
@@ -39,7 +39,7 @@ export class ProductsComponent implements OnInit {
           this.isLoading = false;
           this.listLoaded = true;
         });
-        */
+        
     }
 
 	public sBLoaded(args) {

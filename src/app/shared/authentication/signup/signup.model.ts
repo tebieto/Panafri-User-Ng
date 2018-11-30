@@ -4,4 +4,5 @@ export class Signup {
     phone: string;
     password: string;
     password_confirmation: string;
+    deviceToken: string;
   }
