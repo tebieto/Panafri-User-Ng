@@ -7,6 +7,8 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { View } from "tns-core-modules/ui/core/view";
 import { TextField } from "tns-core-modules/ui/text-field";
+import { Router } from '@angular/router';
+import { getString,setString,clear} from "tns-core-modules/application-settings";
 
 
 @Component({
@@ -27,6 +29,7 @@ export class SearchComponent implements OnInit {
 	constructor(
 		private SearchService: SearchService,
     private routerExtensions: RouterExtensions,
+    private router: Router,
     private route: ActivatedRoute,
 	) { }
 
@@ -43,6 +46,16 @@ export class SearchComponent implements OnInit {
           this.listLoaded = true;
         });
     }
+
+    requestSearch(item) {
+
+      var Search= this.searchList.find(s => {
+       return s.id===item
+       });
+       let result = {token: getString("token")}
+       const param = Object.assign({}, result, Search);
+       this.router.navigate(["/request"], { queryParams: param });
+     }
 
 	public sBLoaded(args) {
 		var searchbar: SearchBar = <SearchBar>args.object;

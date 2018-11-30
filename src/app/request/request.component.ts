@@ -64,13 +64,17 @@ export class RequestComponent implements OnInit {
   }
 
   ngOnInit() {
+  if(getString("token").length==0) {
+    this.router.navigate(["welcome"]); 
+  }
   this.isLoading = true;
   this.listLoaded = false;
     this.page.actionBarHidden = false;
     this.route.queryParams.subscribe(params => {
+      
       this.token= params.token
       this.requestList.push(params)
-      const token = getString("token")
+      const token = params.token
       this.PageTitle= params.name
       this.productName= params.name
       this.productImage= params.image
@@ -85,14 +89,24 @@ export class RequestComponent implements OnInit {
 
       this.UserService.load(token)
       .subscribe(loadedUser => {
-        console.log(loadedUser)
+      
+        if(loadedUser[0].status){
+          const newParam = Object.keys(params).reduce((object, key) => {
+            if (key !== "token") {
+              object[key] = params[key]
+            }
+            return object
+          }, {})
+          this.router.navigate(["/RequestLogin"], { queryParams: newParam});
+        }
+
         this.request.product_id= params.id
         this.request.buyer_id = loadedUser[0].user.id
         this.request.type= params.type
         this.request.seller_id= params.owner
         this.request.delivery= 1
         this.request.location= "Unknown"
-        this.request.token= getString("token")
+        this.request.token= params.token
         this.Request()
 
         this.AuthName=loadedUser[0].user.name

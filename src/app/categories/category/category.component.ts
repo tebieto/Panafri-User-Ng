@@ -7,6 +7,8 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { View } from "tns-core-modules/ui/core/view";
 import { TextField } from "tns-core-modules/ui/text-field";
+import { Router } from '@angular/router';
+import { getString,setString,clear} from "tns-core-modules/application-settings";
 
 
 @Component({
@@ -27,6 +29,7 @@ export class CategoryComponent implements OnInit {
 	constructor(
 		private CategoryService: CategoryService,
     private routerExtensions: RouterExtensions,
+    private router: Router,
     private route: ActivatedRoute,
 	) { }
 
@@ -42,8 +45,22 @@ export class CategoryComponent implements OnInit {
           });
           this.isLoading = false;
           this.listLoaded = true;
+          
+          
         });
     }
+
+    requestCategory(item) {
+
+      var Category= this.categoryList.find(c => {
+       return c.id===item
+       });
+       let result = {token: getString("token")}
+       const param = Object.assign({}, result, Category);
+      
+
+       this.router.navigate(["/request"], { queryParams: param });
+     }
 
 	public sBLoaded(args) {
 		var searchbar: SearchBar = <SearchBar>args.object;

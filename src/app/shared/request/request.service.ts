@@ -10,9 +10,11 @@ import { Config } from "../config";
 @Injectable()
 export class RequestService {
     constructor(private http: Http) { }
-    token= getString("token")
+    token= ""
     request(request: Request) {
-         this.token = "Bearer" + getString("token")
+        console.log(request)
+         this.token = "Bearer" + request.token
+
         let headers = new Headers({ "Authorization": this.token });
         let options = new RequestOptions({ headers: headers });
         return this.http.post(

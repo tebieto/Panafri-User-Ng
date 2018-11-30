@@ -15,14 +15,14 @@
             <GridLayout class="page">
                     <GridView [items]="serviceList" colWidth="50%" rowHeight="250">
                       <ng-template let-item="item" let-odd="odd">
-                        <StackLayout margin="10" [nsRouterLink]="['/item', item.id]" borderColor="#dddddd" borderWidth="2" borderRadius="2" verticalAlignment="stretch" class="list-group-item" [class.odd]="odd">
-                          <StackLayout class="card-content" (tap)="goToService('i')">
+                        <StackLayout margin="10"  borderColor="#dddddd" borderWidth="2" borderRadius="2" verticalAlignment="stretch" class="list-group-item" [class.odd]="odd">
+                          <StackLayout class="card-content">
                              <Image src="{{item.image}}"  class="action-image"
                             stretch="aspectFill" decodeWidth="400" decodeHeight="100" loadMode="async"></Image>
                             <Label class="title" [text]="item.name"></Label>
                             <Label class="price" text="&#8358;{{item.price}}"></Label>
                             <Label class="location" [text]="item.location"></Label>
-                            <Button class="btn btn-primary request-button" text="Request" (tap)="request()"></Button>
+                            <Button class="btn btn-primary request-button" text="Request" (tap)="requestService(item.id)"></Button>
                           </StackLayout>
                         
                         </StackLayout>

@@ -15,7 +15,7 @@
                       <Label class="title" [text]="item.name"></Label>
                       <Label class="price" text="&#8358;{{item.price}}"></Label>
                       <Label class="location" [text]="item.location"></Label>
-                      <Button class="btn btn-primary request-button" text="Request" (tap)="request()"></Button>
+                      <Button class="btn btn-primary request-button" text="Request" (tap)="requestSearch(item.id)"></Button>
                     </StackLayout>
                   
                   </StackLayout>

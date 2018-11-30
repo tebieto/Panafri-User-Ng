@@ -8,6 +8,7 @@ import { View } from "tns-core-modules/ui/core/view";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { ActivatedRoute } from '@angular/router';
 import { ListViewEventData, RadListView } from "nativescript-ui-listview";
+import { getString,setString,clear} from "tns-core-modules/application-settings";
 
 
 @Component({
@@ -33,6 +34,10 @@ export class RequestsComponent implements OnInit {
 
     ngOnInit() {
       this.isLoading = true;
+
+      if(getString("token").length==0) {
+        this.routerExtensions.navigate(["welcome"]); 
+      }
 
       this.route.queryParams.subscribe(params => {
      

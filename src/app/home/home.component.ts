@@ -47,17 +47,23 @@ export class HomeComponent implements OnInit {
 	) { }
 
   ngOnInit() {
+
+    if(getString("token").length==0) {
+      this.router.navigate(["welcome"]); 
+    }
+    
     this.page.actionBarHidden = false;
     this.isLoading = true;
-
+    this.TokenParams= getString("token");
     this.route.queryParams.subscribe(params => {
       
-        this.TokenParams=getString("token")
+      });
 
-        this.UserService.load(params)
+      this.UserService.load(getString("token"))
         .subscribe(loadedUser => {
-          this.AuthName=loadedUser[0].name
-          this.AuthAvatar=loadedUser[0].avatar
+         
+          this.AuthName=loadedUser[0].user.name
+          this.AuthAvatar=loadedUser[0].user.avatar
           loadedUser.forEach((userObject) => {
             this.userList.unshift(userObject);
             
@@ -71,7 +77,7 @@ export class HomeComponent implements OnInit {
           this.isLoading = false;
           this.listLoaded = true;
         });
-      });
+      
       
       this.ProductsService.load()
         .subscribe(loadedProducts => {
@@ -144,7 +150,8 @@ export class HomeComponent implements OnInit {
 
   logout() {
     setString("token", "")
-    this.routerExtensions.navigate(['login']);
+    this.TokenParams=""
+    this.routerExtensions.navigate(['welcome']);
   }
 
   goToProfile() {

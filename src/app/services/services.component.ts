@@ -6,6 +6,8 @@ import { switchMap } from "rxjs/operators";
 import { RouterExtensions } from 'nativescript-angular/router';
 import { View } from "tns-core-modules/ui/core/view";
 import { TextField } from "tns-core-modules/ui/text-field";
+import { Router } from '@angular/router';
+import { getString,setString,clear} from "tns-core-modules/application-settings";
 
 
 @Component({
@@ -25,7 +27,8 @@ export class ServicesComponent implements OnInit {
 
 	constructor(
 		private ServicesService: ServicesService,
-		private routerExtensions: RouterExtensions,
+    private routerExtensions: RouterExtensions,
+    private router: Router,
 	) { }
 
     ngOnInit() {
@@ -39,6 +42,16 @@ export class ServicesComponent implements OnInit {
           this.listLoaded = true;
         });
     }
+
+    requestService(item) {
+
+      var Service= this.serviceList.find(s => {
+       return s.id===item
+       });
+       let result = {token: getString("token")}
+       const param = Object.assign({}, result, Service);
+       this.router.navigate(["/request"], { queryParams: param });
+     }
 
 	public sBLoaded(args) {
 		var searchbar: SearchBar = <SearchBar>args.object;

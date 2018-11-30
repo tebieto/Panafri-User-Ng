@@ -111,6 +111,7 @@ export class LoginComponent implements OnInit {
           setString("token", result.token);
           var Product = this.Product
           const param = Object.assign({}, result, Product);
+          
           this.router.navigate(["/AuthRequest"], { queryParams: param });
       },
         (error) => alert("Unfortunately we could not find your account.")

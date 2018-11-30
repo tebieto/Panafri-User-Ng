@@ -6,6 +6,8 @@ import { switchMap } from "rxjs/operators";
 import { RouterExtensions } from 'nativescript-angular/router';
 import { View } from "tns-core-modules/ui/core/view";
 import { TextField } from "tns-core-modules/ui/text-field";
+import { Router } from '@angular/router';
+import { getString,setString,clear} from "tns-core-modules/application-settings";
 
 
 @Component({
@@ -25,7 +27,8 @@ export class ProductsComponent implements OnInit {
 
 	constructor(
 		private ProductsService: ProductsService,
-		private routerExtensions: RouterExtensions,
+    private routerExtensions: RouterExtensions,
+    private router: Router,
 	) { }
 
     ngOnInit() {
@@ -38,9 +41,22 @@ export class ProductsComponent implements OnInit {
           });
           this.isLoading = false;
           this.listLoaded = true;
+          
+          console.log(this.productList)
         });
         
+        
     }
+
+    requestProduct(item) {
+
+      var Product= this.productList.find(p => {
+       return p.id===item
+       });
+       let result = {token: getString("token")}
+       const param = Object.assign({}, result, Product);
+       this.router.navigate(["/request"], { queryParams: param });
+     }
 
 	public sBLoaded(args) {
 		var searchbar: SearchBar = <SearchBar>args.object;
