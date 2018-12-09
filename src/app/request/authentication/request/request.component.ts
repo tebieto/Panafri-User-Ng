@@ -152,7 +152,7 @@ export class RequestComponent implements OnInit {
         this.not.image = this.productImage;
         this.not.icon = this.AuthAvatar;
         this.not.app = "partner";
-        this.not.deviceToken = getString("deviceToken");
+        this.not.deviceToken =this.SellerDeviceToken;
 
         this.notificationService.notification(this.not)
     .subscribe(

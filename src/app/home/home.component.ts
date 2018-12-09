@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
     private page: Page,
     private route: ActivatedRoute
 	) { }
-
+ 
   ngOnInit() {
 
     if(getString("token").length==0) {
