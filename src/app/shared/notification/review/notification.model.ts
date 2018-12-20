@@ -1,8 +1,11 @@
 export class Notification {
+    id: string;
     title: string;
+    type: string;
     body: string;
     image: string;
     icon: string;
     app: string;
-    deviceToken:string
+    deviceToken:string;
+    authDeviceToken:string;
   }

@@ -63,6 +63,15 @@ export class RequestsComponent implements OnInit {
       swipeLimits.threshold = rightItem.getMeasuredWidth() / 2;
     }
 
+    viewStatus(item) {
+
+      var Status= this.requestList.find(r => {
+       return r.id===item
+       });
+       let param = {token: getString("token"), name:Status.product.name, image: Status.product.image, owner:Status.product.owner, price:Status.product.price, status:Status.status }
+       this.routerExtensions.navigate(["/status"], { queryParams: param });
+     }
+
 	public goBack() {
 		this.routerExtensions.backToPreviousPage();
   }

@@ -12,6 +12,8 @@ import { UserService } from "../shared/user/user.service";
 import { User } from "../shared/user/user.model";
 import { ActivatedRoute } from '@angular/router';
 import { getString,setString,clear} from "tns-core-modules/application-settings";
+import { messaging, Message } from "nativescript-plugin-firebase/messaging";
+import { LocalNotifications } from "nativescript-local-notifications";
 
 @Component({
   selector: 'home',
@@ -27,14 +29,25 @@ export class HomeComponent implements OnInit {
   productList: Array<Products> = [];
   serviceList: Array<Services> = [];
   userList: Array<User> = [];
+    user=""
     product = "";
     service = "";
-    user = "";
     AuthName = "";
     AuthAvatar = "";
+    AuthEmail=""
+    AuthPhone=""
     isLoading = false;
     listLoaded = false;
     TokenParams= "";
+    NotTitle=""
+    NotBody=""
+    NotImage=""
+    NotIcon=""
+    NotRequestStatus=""
+    NotRequestType=""
+    NotProductName=""
+    NotProductOwner=""
+    NotProductPrice=""
 
 	constructor(
     private ServiceService: ServicesService,
@@ -44,13 +57,76 @@ export class HomeComponent implements OnInit {
     private routerExtensions: RouterExtensions,
     private page: Page,
     private route: ActivatedRoute
-	) { }
+	) { 
+
+    
+  }
  
   ngOnInit() {
+
+    LocalNotifications.addOnMessageReceivedCallback(
+      function (notification) {
+        
+      }
+  ).then(i=> {
+    if(this.NotRequestType=="Request"){
+      console.log("It worked:" + this.NotRequestType)
+    let param = {token: getString("token"), name:this.NotProductName, image: this.NotImage , owner:this.NotProductOwner, price:this.NotProductPrice, status:this.NotRequestStatus }
+    this.routerExtensions.navigate(["/status"], { queryParams: param });
+    }
+
+  }
+  )
 
     if(getString("token").length==0) {
       this.router.navigate(["welcome"]); 
     }
+
+    messaging.registerForPushNotifications({
+      onPushTokenReceivedCallback: (token: string): void => {
+        console.log("Firebase plugin received a push token: " + token);
+      },
+    
+      onMessageReceivedCallback: (message: Message) => {
+        if(message.data.app=="user") {
+          return false
+        }
+       this.NotTitle=message.data.title
+       this.NotBody=message.data.body
+       this.NotImage=message.data.image
+       this.NotProductName=message.data.name
+       this.NotProductPrice= message.data.price
+       this.NotProductOwner=message.data.id
+       this.NotRequestStatus=message.data.status
+       this.NotRequestType=message.data.type
+       this.NotIcon=message.data.icon
+       LocalNotifications.schedule([{
+        id: 1,
+        title: this.NotTitle,
+        body: this.NotBody,
+        badge: 1,
+        ongoing: true, // makes the notification ongoing (Android only)
+        icon: this.NotIcon,
+        image: this.NotImage,
+        thumbnail: true,
+        at: new Date(new Date().getTime() + (10 * 1000)) // 10 seconds from now
+      }]).then(
+          function() {
+            console.log("Notification scheduled");
+          },
+          function(error) {
+            console.log("scheduling error: " + error);
+          }
+      )
+      
+      },
+    
+      // Whether you want this plugin to automatically display the notifications or just notify the callback. Currently used on iOS only. Default true.
+      showNotifications: true,
+    
+      // Whether you want this plugin to always handle the notifications when the app is in foreground. Currently used on iOS only. Default false.
+     
+    }).then(() => console.log("Registered for push"));
     
     this.page.actionBarHidden = false;
     this.isLoading = true;
@@ -61,22 +137,18 @@ export class HomeComponent implements OnInit {
 
       this.UserService.load(getString("token"))
         .subscribe(loadedUser => {
-         
           this.AuthName=loadedUser[0].user.name
           this.AuthAvatar=loadedUser[0].user.avatar
-          loadedUser.forEach((userObject) => {
-            this.userList.unshift(userObject);
-            
+            this.AuthEmail=loadedUser[0].user.email
+            this.AuthPhone=loadedUser[0].user.phone
+            this.isLoading = false;
+            this.listLoaded = true;
           },
           (error) => {
             alert("Unfortunately we could not retireve your profile.")
             this.routerExtensions.navigate(['login']);
-          }
-      
-          );
-          this.isLoading = false;
-          this.listLoaded = true;
-        });
+          });
+         
       
       
       this.ProductsService.load()
@@ -166,6 +238,19 @@ export class HomeComponent implements OnInit {
         let active =searchBar.text
         this.routerExtensions.navigate(['search', active]);
 
+  }
+
+  reviewPartners() {
+     this.router.navigate(["/reviews"]);
+   }
+
+   editProfile() {
+    let profile= {name:this.AuthName, avatar:this.AuthAvatar, email:this.AuthEmail, phone:this.AuthPhone}
+    this.router.navigate(["/edit-profile"], {queryParams:profile});
+  }
+
+  changePassword() {
+    this.router.navigate(["/change-password"]);
   }
 
   requestProduct(item) {

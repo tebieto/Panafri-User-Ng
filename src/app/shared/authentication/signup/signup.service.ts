@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers, Response } from "@angular/http";
+import { Http, Headers, Response, RequestOptions } from "@angular/http";
 import { Observable } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
 
@@ -8,6 +8,7 @@ import { Config } from "../../config";
 
 @Injectable()
 export class SignupService {
+    token=""
     constructor(private http: Http) { }
 
     signup(signup: Signup) {
@@ -24,6 +25,50 @@ export class SignupService {
             { headers: this.getCommonHeaders() }
         ).pipe(
             map(response => response.json()),
+            map(data => {return data}),
+            catchError(this.handleErrors)
+        );
+    }
+
+    edit(signup: Signup) {
+        
+        this.token = "Bearer" + signup.token
+        console.log(signup)
+        let headers = new Headers({ "Authorization": this.token });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post(
+            Config.apiUrl + "edit/user",
+            JSON.stringify({
+                name: signup.name,
+                email: signup.email,
+                phone: signup.phone,
+                avatar: signup.avatar,
+            }),
+            { headers: this.getCommonHeaders() }
+        ).pipe(
+            map(response => response.json()),
+            map(data => {return data}),
+            catchError(this.handleErrors)
+        );
+    }
+
+    change(signup: Signup) {
+        
+        this.token = "Bearer" + signup.token
+         console.log(this.token)
+
+        let headers = new Headers({ "Authorization": this.token });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post(
+            Config.apiUrl + "change/password",
+            JSON.stringify({
+                password: signup.password,
+                password_confirmation: signup.password_confirmation,
+            }),
+            { headers: this.getCommonHeaders() }
+        ).pipe(
+            map(response => response.json()),
+            map(data => {return data}),
             catchError(this.handleErrors)
         );
     }
@@ -31,7 +76,7 @@ export class SignupService {
     getCommonHeaders() {
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
-        headers.append("Authorization", Config.authHeader);
+        headers.append("Authorization", this.token);
         return headers;
     }
 

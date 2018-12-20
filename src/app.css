@@ -19,6 +19,17 @@ components that have the btn class name.
     font-size: 18;
 }
 
+.rounded {
+    width:100px;
+    height:100px;
+    background-color:rgb(0, 119, 255);
+    border-radius: 100%;
+}
+
+.rounded:active {
+   background-color:rgb(8, 100, 204);
+}
+
 .far {
     font-family: Font Awesome 5 Free, fa-solid-900;
     font-weight: 400; 
@@ -159,8 +170,24 @@ components that have the btn class name.
 
 .action-image {
     position:relative;
-    height:450px;
+    height:250px;
 
+}
+
+.gold {
+    color: goldenrod;
+}
+.white {
+    color:white;
+}
+
+.remark{
+font-weight:bold
+}
+
+.gold, .white, .remark {
+    width:150px;
+    height:150px
 }
 
 .RequestPage {

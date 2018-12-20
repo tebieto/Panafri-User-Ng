@@ -15,11 +15,16 @@ const routes: Routes = [
     { path: "category/:name", loadChildren: "~/app/categories//category/category.module#CategoryModule" },
     { path: "search/:name", loadChildren: "~/app/search/search.module#SearchModule" },
     { path: "signup", loadChildren: "~/app/authentication/signup/signup.module#SignupModule" },
+    { path: "change-password", loadChildren: "~/app/password/change/change.module#ChangeModule" },
+    { path: "edit-profile", loadChildren: "~/app/profile/edit/edit.module#EditModule" },
     { path: "RequestRegister", loadChildren: "~/app/request/authentication/signup/signup.module#SignupModule" },
     { path: "login", loadChildren: "~/app/authentication/login/login.module#LoginModule" },
+    { path: "request-status", loadChildren: "~/app/requests/status/status.module#StatusModule" },
     { path: "RequestLogin", loadChildren: "~/app/request/authentication/login/login.module#LoginModule" },
     { path: "requests", loadChildren: "~/app/requests/requests.module#RequestsModule" },
+    { path: "reviews", loadChildren: "~/app/reviews/reviews.module#ReviewsModule" },
     { path: "request", loadChildren: "~/app/request/request.module#RequestModule" },
+    { path: "review", loadChildren: "~/app/review/review.module#ReviewModule" },
     { path: "AuthRequest", loadChildren: "~/app/request/authentication/request/request.module#RequestModule" },
 ];
 

@@ -3,8 +3,8 @@ import { Http, Headers, Response } from "@angular/http";
 import { Observable } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
 
-import { Notification } from "./notification.model";
-import { Config } from "../config";
+import { Notification } from "../request/notification.model";
+import { Config } from "../../config";
 
 @Injectable()
 export class NotificationService {
@@ -12,10 +12,15 @@ export class NotificationService {
     data={}
     notification(notification: Notification) {
         this.data = { "data": {
+            "id" : notification.id,
             "title" : notification.title,
             "body"  : notification.body,
             "app"  : "user",
+            "rid" : notification.rid,
+            "price": notification.price,
+            "name": notification.name,
             "image"  : notification.image,
+            "device"  : notification.authDeviceToken,
         },
         "to" : notification.deviceToken
     }
@@ -31,7 +36,6 @@ export class NotificationService {
     }
 
     getCommonHeaders() {
-        console.log(Config.fcmAuth)
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         headers.append("Authorization", Config.fcmAuth);

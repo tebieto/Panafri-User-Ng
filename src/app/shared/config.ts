@@ -2,6 +2,7 @@ import { getString,setString,clear} from "tns-core-modules/application-settings"
 
 export class Config {
     static apiUrl = "https://panafri.com/api/app/";
+    static otherUrl = "https://panafri.com/api/partner/";
     static fcmUrl = "https://fcm.googleapis.com/fcm/send";
     static appKey = "";
     static authHeader = "";

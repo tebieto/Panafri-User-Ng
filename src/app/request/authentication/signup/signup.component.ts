@@ -47,8 +47,7 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("device token:" + getString("deviceToken"))
-    console.log("token:" + getString("token"))
+
     this.page.actionBarHidden = false;
   
     messaging.getCurrentPushToken()
@@ -57,44 +56,7 @@ export class SignupComponent implements OnInit {
         setString("deviceToken", this.DeviceToken);
       });
 
-    messaging.registerForPushNotifications({
-      onPushTokenReceivedCallback: (token: string): void => {
-        console.log("Firebase plugin received a push token: " + token);
-      },
     
-      onMessageReceivedCallback: (message: Message) => {
-       console.log("Push message received: " + message.data.body);
-       this.NotTitle=message.data.title
-       this.NotBody=message.data.body
-       this.NotImage=message.data.image
-       this.NotIcon=message.data.icon
-       LocalNotifications.schedule([{
-        id: 1,
-        title: this.NotTitle,
-        body: this.NotBody,
-        badge: 1,
-        ongoing: true, // makes the notification ongoing (Android only)
-        icon:this.NotIcon,
-        image: this.NotImage,
-        thumbnail: true,
-        at: new Date(new Date().getTime() + (10 * 1000)) // 10 seconds from now
-      }]).then(
-          function() {
-            console.log("Notification scheduled");
-          },
-          function(error) {
-            console.log("scheduling error: " + error);
-          }
-      )
-      
-      },
-    
-      // Whether you want this plugin to automatically display the notifications or just notify the callback. Currently used on iOS only. Default true.
-      showNotifications: true,
-    
-      // Whether you want this plugin to always handle the notifications when the app is in foreground. Currently used on iOS only. Default false.
-     
-    }).then(() => console.log("Registered for push"));
 
     this.route.queryParams.subscribe(params => {
 
@@ -106,6 +68,8 @@ export class SignupComponent implements OnInit {
 
   
   signUp() {
+
+    this.user.deviceToken= this.DeviceToken;
     this.isLoading = true;
     this.signupService.signup(this.user)
     .subscribe(

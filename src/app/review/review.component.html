@@ -1,0 +1,20 @@
+<ActionBar title="Reviewing {{PageTitle}}">
+        <NavigationButton android.systemIcon="ic_menu_back" text="Back to ActionBar" (tap)="goBack()"></NavigationButton>
+      </ActionBar>
+      <ScrollView>
+        <StackLayout class="page p-t-15">
+            <StackLayout orientation="horizontal" horizontalAlignment="center">
+            <Label class="fab icon gold" *ngFor="let i of arrayGold(rating)" text=" &#xf005;"></Label>
+            <Label class="fab icon white" *ngFor="let i of arrayWhite(rating)" text="&#xf005;"></Label>
+            </StackLayout>
+
+            <StackLayout orientation="horizontal" horizontalAlignment="center">
+            <Label class="remark" [text]="remark(rating)"></Label>
+            </StackLayout>
+
+            <Slider row="1" col="1" value="{{rating}}"  minValue="0" maxValue="7" (valueChange)="onSliderChange($event)"></Slider>
+            <TextField class="m-t-10 m-b-10 m-l-15 m-r-15" hint="Add a message" autocorrect="false" autocapitalization="none"
+            [(ngModel)]="review.message"></TextField>
+          <Button class="btn btn-primary" text="Send" (tap)="Review()"></Button>
+        </StackLayout>
+      </ScrollView>

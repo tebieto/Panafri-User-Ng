@@ -1,0 +1,39 @@
+
+Label {
+  background-color: white;
+  border-bottom-width: 1;
+  border-bottom-color: transparent;
+  font-weight: bold;
+}
+
+.delete-view {
+  background-color: rgb(4, 155, 4);
+  padding: 20;
+}
+.delete-view Image {
+  color: rgb(233, 10, 10);
+}
+
+.image {
+  width:100;
+  height:100;
+  border-radius:100%;
+  background-color: #eee;
+}
+
+.item:active {
+  background-color: #eee;
+}
+
+ListView {
+    opacity: 0;
+  }
+  .visible {
+    animation-name: show;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+  }
+  @keyframes show {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }

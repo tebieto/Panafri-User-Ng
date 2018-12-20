@@ -14,8 +14,7 @@ export class UserService {
 
     load(params) {
         // Kinvey-specific syntax to sort the groceries by last modified time. Don’t worry about the details here.
-        console.log("user serviceparams")
-        console.log(params)
+      
         let headers = new Headers({ "Authorization": "Bearer" + params });
         let options = new RequestOptions({ headers: headers });
 

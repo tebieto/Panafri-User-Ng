@@ -1,0 +1,48 @@
+
+    .page {
+        background-color: #EDECED;
+     }
+     
+     .card {
+      margin: 16;
+      background-color: #FFFFFF;
+      border-radius: 4;
+     }
+     
+     .image {
+      height: 100;
+      width: 100;
+      background-color: #eee
+     }
+     
+     .card-header, .card-body {
+      padding: 10 12;
+     }
+     
+     .title, .caption {
+      margin-bottom: 0;
+     }
+     
+     .title {
+      color: rgba(0,0,0,0.87);
+     }
+     
+     .caption {
+      color: rgba(0,0,0,0.54);
+     }
+     
+     .btn-primary {
+        background-color:green;
+        padding: 20 0;
+        color: rgba(255,255,255,0.87);
+        font-size: 15;
+        margin: 16 12;
+     }
+
+     .rounded {
+         width:200px;
+         height:200px;
+         background-color:rgb(0, 119, 255);
+         border-radius: 100%;
+     }
+  

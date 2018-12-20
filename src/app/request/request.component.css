@@ -39,14 +39,5 @@
         margin: 16 12;
      }
 
-     .rounded {
-         width:200px;
-         height:200px;
-         background-color:rgb(0, 119, 255);
-         border-radius: 100%;
-     }
-
-     .rounded:active {
-        background-color:rgb(8, 100, 204);
-    }
+     
   

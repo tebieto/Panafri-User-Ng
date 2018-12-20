@@ -16,8 +16,8 @@ import { messaging, Message } from "nativescript-plugin-firebase/messaging";
 import { LocalNotifications } from "nativescript-local-notifications";
 import { Observable } from "tns-core-modules/data/observable";
 import { getString,setString,clear} from "tns-core-modules/application-settings";
-import { Notification } from "../../../shared/notification/notification.model";
-import {  NotificationService } from "../../../shared/notification/notification.service";
+import { Notification } from "../../../shared/notification/request/notification.model";
+import {  NotificationService } from "../../../shared/notification/request/notification.service";
 
 
 @Component({
@@ -33,6 +33,7 @@ export class RequestComponent implements OnInit {
   requestList= []
   request: Request;
   not: Notification;
+  AuthId=""
   AuthName= ""
   AuthAvatar= ""
   SellerName= ""
@@ -41,6 +42,8 @@ export class RequestComponent implements OnInit {
   PageTitle=""
   productName=""
   productImage=""
+  productPrice=""
+  SellerId=""
   token=""
   SellerDeviceToken=""
   NotTitle=""
@@ -74,16 +77,20 @@ export class RequestComponent implements OnInit {
       const token = params.token
       this.PageTitle= params.name
       this.productName= params.name
+      this.productPrice= params.price
       this.productImage= params.image
+      this.SellerId = params.owner
 
       this.SellerService.load(params)
       .subscribe(loadedSeller => {
+        console.log(loadedSeller)
         console.log("seller:")
         console.log(loadedSeller)
         this.SellerName = loadedSeller[0].name
         this.SellerAvatar = loadedSeller[0].avatar
         this.SellerPhone = loadedSeller[0].phone
         this.SellerDeviceToken = loadedSeller[0].profile.about
+        console.log("device:"+ this.SellerDeviceToken)
         
       })
 
@@ -130,7 +137,7 @@ export class RequestComponent implements OnInit {
         (result) => {
           console.log(result)
 
-          this.notify()
+          this.notify(result.id)
 
           this.isLoading = false;
           this.listLoaded = true;
@@ -145,14 +152,19 @@ export class RequestComponent implements OnInit {
       
   }
 
-  notify() {
-
-        this.not.title = "New Request";
-        this.not.body = this.AuthName + " requested " + this.productName;
+  notify(rid) {
+        this.not.id = this.SellerId;
+        this.not.title = this.AuthName.toUpperCase();
+        this.not.body = this.AuthName.toUpperCase() + " requested " + this.productName;
         this.not.image = this.productImage;
+        this.not.type= "Request"
+        this.not.rid= rid
+        this.not.name = this.productName
+        this.not.price = this.productPrice
         this.not.icon = this.AuthAvatar;
         this.not.app = "partner";
-        this.not.deviceToken =this.SellerDeviceToken;
+        this.not.deviceToken = this.SellerDeviceToken
+        this.not.authDeviceToken =  getString("deviceToken")
 
         this.notificationService.notification(this.not)
     .subscribe(

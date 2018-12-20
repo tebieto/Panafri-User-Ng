@@ -8,7 +8,7 @@
   <RadListView row="1" [items]="requestList" [class.visible]="listLoaded">
 
   <ng-template let-item="item">
-      <StackLayout class="item">
+      <StackLayout class="item" (tap)="viewStatus(item.id)">
           <GridLayout columns="*, 125">
               <StackLayout col="0"  padding="10">
                   <Label [text]="item.product.name"></Label>

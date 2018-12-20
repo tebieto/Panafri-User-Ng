@@ -16,8 +16,8 @@ import { messaging, Message } from "nativescript-plugin-firebase/messaging";
 import { LocalNotifications } from "nativescript-local-notifications";
 import { Observable } from "tns-core-modules/data/observable";
 import { getString,setString,clear} from "tns-core-modules/application-settings";
-import { Notification } from "../shared/notification/notification.model";
-import {  NotificationService } from "../shared/notification/notification.service";
+import { Notification } from "../shared/notification/request/notification.model";
+import {  NotificationService } from "../shared/notification/request/notification.service";
 
 
 @Component({
@@ -33,13 +33,16 @@ export class RequestComponent implements OnInit {
   requestList= []
   request: Request;
   not: Notification;
+  AuthId=""
   AuthName= ""
   AuthAvatar= ""
+  SellerId=""
   SellerName= ""
   SellerAvatar= ""
   SellerPhone= ""
   PageTitle=""
   productName=""
+  productPrice=""
   productImage=""
   token=getString("token")
   SellerDeviceToken=""
@@ -77,14 +80,19 @@ export class RequestComponent implements OnInit {
       const token = params.token
       this.PageTitle= params.name
       this.productName= params.name
+      this.productPrice= params.price
       this.productImage= params.image
+      this.SellerId = params.owner
 
       this.SellerService.load(params)
       .subscribe(loadedSeller => {
+        console.log(loadedSeller)
         this.SellerName = loadedSeller[0].name
         this.SellerAvatar = loadedSeller[0].avatar
         this.SellerPhone = loadedSeller[0].phone
         this.SellerDeviceToken = loadedSeller[0].profile.about
+        console.log("device:" + this.SellerDeviceToken)
+
       })
 
       this.UserService.load(token)
@@ -109,6 +117,7 @@ export class RequestComponent implements OnInit {
         this.request.token= params.token
         this.Request()
 
+        this.AuthId=loadedUser[0].user.id
         this.AuthName=loadedUser[0].user.name
         this.AuthAvatar=loadedUser[0].user.avatar
         loadedUser.forEach((userObject) => {
@@ -137,7 +146,7 @@ export class RequestComponent implements OnInit {
           console.log(result)
 
           
-        this.notify()
+        this.notify(result.id)
 
           this.isLoading = false;
           this.listLoaded = true;
@@ -153,14 +162,19 @@ export class RequestComponent implements OnInit {
       
   }
 
-  notify() {
-
-        this.not.title = "New Request";
-        this.not.body = this.AuthName + " requested " + this.productName;
+  notify(rid) {
+        this.not.id = this.SellerId;
+        this.not.title = this.AuthName.toUpperCase();
+        this.not.body = this.AuthName.toUpperCase() + " requested " + this.productName;
         this.not.image = this.productImage;
+        this.not.type= "Request"
+        this.not.name = this.productName
+        this.not.price = this.productPrice
+        this.not.rid = rid
         this.not.app = "partner";
         this.not.icon = this.AuthAvatar;
         this.not.deviceToken = this.SellerDeviceToken;
+        this.not.authDeviceToken =  getString("deviceToken")
 
         this.notificationService.notification(this.not)
     .subscribe(
