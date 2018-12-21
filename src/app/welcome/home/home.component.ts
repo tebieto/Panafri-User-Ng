@@ -54,8 +54,6 @@ export class HomeComponent implements OnInit {
 	) { }
 
   ngOnInit() {
-    console.log("device token:" + getString("deviceToken"))
-    console.log("token:" + getString("token"))
     this.page.actionBarHidden = false;
   
     messaging.getCurrentPushToken()
