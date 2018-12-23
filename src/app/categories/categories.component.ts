@@ -17,6 +17,7 @@ import { TextField } from "tns-core-modules/ui/text-field";
 })
 
 export class CategoriesComponent implements OnInit {
+  icon="&#xf042;"
 	categoryList: Array<Categories> = [];
     category = "";
     isLoading = false;
