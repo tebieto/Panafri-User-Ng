@@ -169,8 +169,9 @@ components that have the btn class name.
 }
 
 .action-image {
-    position:relative;
-    height:250px;
+    position:absolute;
+    top:10px;
+    height:450px;
 
 }
 

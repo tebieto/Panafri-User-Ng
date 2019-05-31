@@ -26,7 +26,7 @@ export class NotificationService {
         "to" : notification.deviceToken
     }
 
-    // console.log(notification.deviceToken)
+    console.log(notification)
 
         return this.http.post(
             Config.fcmUrl,this.data,

@@ -12,7 +12,6 @@ export class RequestService {
     constructor(private http: Http) { }
     token= ""
     request(request: Request) {
-        // console.log(request)
          this.token = "Bearer" + request.token
 
         let headers = new Headers({ "Authorization": this.token });

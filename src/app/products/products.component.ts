@@ -59,6 +59,7 @@ export class ProductsComponent implements OnInit {
        });
        let result = {token: getString("token")}
        const param = Object.assign({}, result, Product);
+       console.log(param)
        this.router.navigate(["/request"], { queryParams: param });
      }
 

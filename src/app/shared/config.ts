@@ -1,8 +1,8 @@
 import { getString,setString,clear} from "tns-core-modules/application-settings";
 
 export class Config {
-    static apiUrl = "http://10.0.2.2:8000/api/app/";
-    static otherUrl = "http://10.0.2.2:8000/api/partner/";
+    static apiUrl = "http://panafri.com/api/app/";
+    static otherUrl = "http://panafri.com/api/partner/";
     static fcmUrl = "https://fcm.googleapis.com/fcm/send";
     static appKey = "";
     static authHeader = "";

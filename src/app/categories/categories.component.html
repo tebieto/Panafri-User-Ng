@@ -16,7 +16,7 @@
                   <ng-template let-item="item" let-odd="odd">
                     <StackLayout margin="10" borderColor="#dddddd" borderWidth="2" borderRadius="2" verticalAlignment="stretch" class="list-group-item" [class.odd]="odd">
                       <StackLayout class="card-content" (tap)="goToCategory(item.name)">
-                         <Image src="{{item.image}}"  class="action-image"
+                         <Image src="{{item.image}}"  class="action-image category-image"
                         stretch="aspectFill" decodeWidth="400" decodeHeight="100" loadMode="async"></Image>
                         <Label class="title" [text]="item.name"></Label>
                       </StackLayout>
