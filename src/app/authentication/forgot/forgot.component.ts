@@ -12,12 +12,12 @@ import { getString,setString,clear} from "tns-core-modules/application-settings"
 
 @Component({
 	moduleId: module.id,
-	selector: 'login',
-	templateUrl: 'login.component.html',
-  styleUrls: ['./login.component.css'],
+	selector: 'forgot',
+	templateUrl: 'forgot.component.html',
+  styleUrls: ['./forgot.component.css'],
   providers: [LoginService]
 })
-export class LoginComponent implements OnInit {
+export class ForgotComponent implements OnInit {
   user: Login;
   DeviceToken=""
   NotTitle=""
@@ -32,11 +32,11 @@ export class LoginComponent implements OnInit {
     private routerExtensions: RouterExtensions,
     ) {
     this.user = new Login();
+    this.user.email = "tebieto@gmail.com";
     this.user.deviceToken= this.DeviceToken
   }
 
   ngOnInit() {
-    
     // console.log("device token:" + getString("deviceToken"))
     // console.log("token:" + getString("token"))
     this.page.actionBarHidden = false;
@@ -52,41 +52,36 @@ export class LoginComponent implements OnInit {
 
 
   
-  Login() {
+  Forgot() {
     this.isLoading = true;
     this.user.deviceToken= this.DeviceToken;
     
-    this.loginService.login(this.user)
-      .subscribe(
-        (result) => {
-          this.isLoading = false;
-          setString("token", result.token);
-          this.router.navigate(["/home"], { queryParams: { jwt: result.token } });
-      },
-        (error) => {
-          let body = JSON.stringify(error._body)
-        //console.log(body)
-       
-        if (body){
-          body = body.replace(/"|\\|}|\{|]|\[/g, "")
-          body = body.replace(/,/g, " ")
-          alert(body)
+    this.loginService.forgot(this.user)
+    .subscribe(
+      (result) => {
+        this.isLoading=false
+        if(result.success) {
+          alert("A new password has been sent to your email address")
           return
         }
-          alert("Unfortunately we could not find your account.")
+    },
+      (error) => {
+        this.isLoading=false
+        if(error.status==500 ) {
+          alert("Internal server error.")
+          return
         }
-      );
+
+        if(error.status==400 ) {
+          alert("Invalid email address.")
+          return
+        }
+        console.log("error m:"+error)
+        alert("Unfortunately we could not establish a connection.")
+        return
+    }
+    );
       
-  }
-
-  Forgot() {
-
-    this.router.navigate(["/forgot"]);
-  }
-
-  SignUp() {
-
-    this.router.navigate(["/signup"]);
   }
 
   toggleDisplay() {

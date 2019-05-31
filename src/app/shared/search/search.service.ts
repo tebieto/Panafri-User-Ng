@@ -39,7 +39,6 @@ export class SearchService {
                 });
                 return searchList;
             }),
-            catchError(this.handleErrors)
         );
     }
 
@@ -52,7 +51,7 @@ export class SearchService {
     }
 
     handleErrors(error: Response) {
-        console.log(JSON.stringify(error.json()));
+        // console.log(JSON.stringify(error.json()));
         return Observable.throw(error);
     }
 }

@@ -1,4 +1,4 @@
-<ActionBar title="SIGN UP">
+<ActionBar title="SIGN UP" class="action-bar">
   <NavigationButton android.systemIcon="ic_menu_back" text="Back to ActionBar" (tap)="goBack()"></NavigationButton>
 </ActionBar>
 <ScrollView>
@@ -16,6 +16,6 @@
       [(ngModel)]="user.password_confirmation"></TextField>
 
     <Button class="btn btn-primary" text="SIGN UP" (tap)="signUp()"></Button>
-    <Button class="btn btn-primary" text="LOG IN" (tap)="Login()"></Button>
+    <Button class="forgot-pas" text="LOG IN" (tap)="Login()"></Button>
   </StackLayout>
 </ScrollView>

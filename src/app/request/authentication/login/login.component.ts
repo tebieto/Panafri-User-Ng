@@ -35,15 +35,12 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute
     ) {
     this.user = new Login();
-    this.user.email = "tebieto@gmail.com";
-    this.user.password = "1223454allu4";
-    
   
   }
 
   ngOnInit() {
-    console.log("device token:" + getString("deviceToken"))
-    console.log("token:" + getString("token"))
+    //console.log("device token:" + getString("deviceToken"))
+    //console.log("token:" + getString("token"))
     this.page.actionBarHidden = false;
   
     messaging.getCurrentPushToken()
@@ -68,7 +65,7 @@ export class LoginComponent implements OnInit {
 
     
     this.user.deviceToken= this.DeviceToken;
-    console.log(this.user)
+    //console.log(this.user)
     
     this.loginService.login(this.user)
       .subscribe(
@@ -80,7 +77,20 @@ export class LoginComponent implements OnInit {
           
           this.router.navigate(["/AuthRequest"], { queryParams: param });
       },
-        (error) => alert("Unfortunately we could not find your account.")
+        (error) => {
+
+          let body = JSON.stringify(error._body)
+        //console.log(body)
+       
+        if (body){
+          body = body.replace(/"|\\|}|\{|]|\[/g, "")
+          body = body.replace(/,/g, " ")
+          alert(body)
+          return
+        }
+          alert("Unfortunately we could not find your account.")
+
+        }
       );
       
   }

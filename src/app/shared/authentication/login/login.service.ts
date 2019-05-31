@@ -21,8 +21,23 @@ export class LoginService {
             { headers: this.getCommonHeaders() }
         ).pipe(
             map(response => response.json()),
+            map(data => {return data})
+        );
+    }
+
+    forgot(login: Login) {
+        return this.http.post(
+            Config.otherUrl + "reset",
+            JSON.stringify({
+                email: login.email,
+                password: login.password,
+                deviceToken: login.deviceToken,
+            }),
+            { headers: this.getCommonHeaders() }
+        ).pipe(
             map(data => {return data}),
-            catchError(this.handleErrors)
+            map(response => response.json()),
+            
         );
     }
 
@@ -32,8 +47,5 @@ export class LoginService {
         return headers;
     }
 
-    handleErrors(error: Response) {
-        console.log(JSON.stringify(error.json()));
-        return Observable.throw(error);
-    }
+  
 }

@@ -1,13 +1,12 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
-import { HttpModule } from '@angular/http';
 import { NativeScriptCommonModule } from "nativescript-angular/common";
-import { RequestsRoutingModule } from "./requests-routing.module";
-import { RequestsComponent } from "../requests/requests.component";
-import { NSModuleFactoryLoader } from "nativescript-angular/router";
+import { HttpModule } from '@angular/http';
+import { ForgotRoutingModule } from "./forgot-routing.module";
+import { ForgotComponent } from "../forgot/forgot.component";
 import { NativeScriptUISideDrawerModule,  } from "nativescript-ui-sidedrawer/angular";
 import { NativeScriptUIGaugeModule } from "nativescript-ui-gauge/angular";
 import { GridViewModule } from 'nativescript-grid-view/angular';
-import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";
@@ -19,18 +18,18 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 
 @NgModule({
     bootstrap: [
-        RequestsComponent
+        ForgotComponent
     ],
     imports: [
-        RequestsRoutingModule,
+        ForgotRoutingModule,
         NativeScriptUISideDrawerModule,
         NativeScriptUIGaugeModule,
         NativeScriptCommonModule,
         GridViewModule,
-        NativeScriptUIListViewModule
+        NativeScriptFormsModule
     ],
     declarations: [
-        RequestsComponent,
+        ForgotComponent,
     ],
     schemas: [
         NO_ERRORS_SCHEMA
@@ -39,4 +38,4 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 /*
 Pass your application module to the bootstrapModule function located in main.ts to start your app
 */
-export class RequestsModule { }
+export class ForgotModule { }

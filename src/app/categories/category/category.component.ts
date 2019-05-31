@@ -39,7 +39,10 @@ export class CategoryComponent implements OnInit {
       this.isLoading = true;
       this.CategoryService.load(Active)
         .subscribe(loadedCategory => {
-          
+          if (loadedCategory.length<=0){
+            alert('Empty Category')
+            return
+          }
           loadedCategory.forEach((categoryObject) => {
             this.categoryList.unshift(categoryObject);
           });

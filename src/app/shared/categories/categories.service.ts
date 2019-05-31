@@ -33,7 +33,6 @@ export class CategoriesService {
                 });
                 return categoryList;
             }),
-            catchError(this.handleErrors)
         );
     }
 
@@ -46,7 +45,7 @@ export class CategoriesService {
     }
 
     handleErrors(error: Response) {
-        console.log(JSON.stringify(error.json()));
+        // console.log(JSON.stringify(error.json()));
         return Observable.throw(error);
     }
 }

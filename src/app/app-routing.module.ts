@@ -19,6 +19,7 @@ const routes: Routes = [
     { path: "edit-profile", loadChildren: "~/app/profile/edit/edit.module#EditModule" },
     { path: "RequestRegister", loadChildren: "~/app/request/authentication/signup/signup.module#SignupModule" },
     { path: "login", loadChildren: "~/app/authentication/login/login.module#LoginModule" },
+    { path: "forgot", loadChildren: "~/app/authentication/forgot/forgot.module#ForgotModule" },
     { path: "request-status", loadChildren: "~/app/requests/status/status.module#StatusModule" },
     { path: "RequestLogin", loadChildren: "~/app/request/authentication/login/login.module#LoginModule" },
     { path: "requests", loadChildren: "~/app/requests/requests.module#RequestsModule" },

@@ -79,21 +79,21 @@ export class RequestComponent implements OnInit {
 
       this.SellerService.load(params)
       .subscribe(loadedSeller => {
-        console.log(loadedSeller)
-        console.log("seller:")
-        console.log(loadedSeller)
+        // console.log(loadedSeller)
+        // console.log("seller:")
+        // console.log(loadedSeller)
         this.SellerName = loadedSeller[0].name
         this.SellerAvatar = loadedSeller[0].avatar
         this.SellerPhone = loadedSeller[0].phone
         this.SellerDeviceToken = loadedSeller[0].profile.about
-        console.log("device:"+ this.SellerDeviceToken)
+        // console.log("device:"+ this.SellerDeviceToken)
         
       })
 
       this.UserService.load(token)
       .subscribe(loadedUser => {
-        console.log("user:")
-        console.log(loadedUser)
+        // console.log("user:")
+        // console.log(loadedUser)
         this.request.product_id= params.id
         this.request.buyer_id = loadedUser[0].user.id
         this.request.type= params.type
@@ -131,7 +131,7 @@ export class RequestComponent implements OnInit {
     this.requestService.request(this.request)
       .subscribe(
         (result) => {
-          console.log(result)
+          // console.log(result)
 
           this.notify()
 
@@ -161,7 +161,7 @@ export class RequestComponent implements OnInit {
         this.notificationService.notification(this.not)
     .subscribe(
       (result) => {
-       console.log(result)
+       // console.log(result)
     },
       (error) => {
         alert("Unfortunately we could not push notification.")

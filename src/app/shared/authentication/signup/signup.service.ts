@@ -26,14 +26,13 @@ export class SignupService {
         ).pipe(
             map(response => response.json()),
             map(data => {return data}),
-            catchError(this.handleErrors)
         );
     }
 
     edit(signup: Signup) {
         
         this.token = "Bearer" + signup.token
-        console.log(signup)
+        // console.log(signup)
         let headers = new Headers({ "Authorization": this.token });
         let options = new RequestOptions({ headers: headers });
         return this.http.post(
@@ -48,14 +47,13 @@ export class SignupService {
         ).pipe(
             map(response => response.json()),
             map(data => {return data}),
-            catchError(this.handleErrors)
         );
     }
 
     change(signup: Signup) {
         
         this.token = "Bearer" + signup.token
-         console.log(this.token)
+         // console.log(this.token)
 
         let headers = new Headers({ "Authorization": this.token });
         let options = new RequestOptions({ headers: headers });
@@ -69,7 +67,6 @@ export class SignupService {
         ).pipe(
             map(response => response.json()),
             map(data => {return data}),
-            catchError(this.handleErrors)
         );
     }
 
@@ -81,7 +78,7 @@ export class SignupService {
     }
 
     handleErrors(error: Response) {
-        console.log(JSON.stringify(error.json()));
+        // console.log(JSON.stringify(error.json()));
         return Observable.throw(error);
     }
 }

@@ -34,6 +34,8 @@ export class HomeComponent implements OnInit {
   NotBody=""
   NotImage=""
   NotIcon=""
+  noProduct=0;
+  noService=0;
     product = "";
     service = "";
     user = "";
@@ -55,7 +57,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.page.actionBarHidden = false;
-  
+    
     messaging.getCurrentPushToken()
       .then(token => {
         this.DeviceToken=token
@@ -64,12 +66,13 @@ export class HomeComponent implements OnInit {
 
     messaging.registerForPushNotifications({
       onPushTokenReceivedCallback: (token: string): void => {
-        console.log("Firebase plugin received a push token: " + token);
+        // console.log("Firebase plugin received a push token: " + token);
       },
     
       onMessageReceivedCallback: (message: Message) => {
-        if(message.data.app=="partner"){return}
-       console.log("Push message received: " + message.data.body);
+       
+        if(message.data.app=="user"){return}
+       // console.log("Push message received: " + message.data.body);
        this.NotTitle=message.data.title
        this.NotBody=message.data.body
        this.NotImage=message.data.image
@@ -86,10 +89,10 @@ export class HomeComponent implements OnInit {
         at: new Date(new Date().getTime() + (10 * 1000)) // 10 seconds from now
       }]).then(
           function() {
-            console.log("Notification scheduled");
+            // console.log("Notification scheduled");
           },
           function(error) {
-            console.log("scheduling error: " + error);
+            // console.log("scheduling error: " + error);
           }
       )
       
@@ -100,11 +103,12 @@ export class HomeComponent implements OnInit {
     
       // Whether you want this plugin to always handle the notifications when the app is in foreground. Currently used on iOS only. Default false.
      
-    }).then(() => console.log("Registered for push"));
+    }).then(() =>  console.log("Registered for push"));
     
 
     this.UserService.load(getString("token"))
-        .subscribe(loadedUser => {      
+        .subscribe(loadedUser => {  
+            
             if(loadedUser[0].status) {
               setString("token", "")
             } else if(loadedUser[0].user) {
@@ -119,7 +123,16 @@ export class HomeComponent implements OnInit {
       
       this.ProductsService.load()
         .subscribe(loadedProducts => {
+
+          if (loadedProducts.length<=0){
+            if (this.noProduct==1){return}
+            this.noProduct==1
+            alert('No product at the moment')
+            return
+          }
+
           loadedProducts.forEach((productObject) => {
+           
             this.productList.unshift(productObject);
             
           },
@@ -133,7 +146,16 @@ export class HomeComponent implements OnInit {
         this.isLoading = true;
         this.ServiceService.load()
           .subscribe(loadedServices => {
+
+            if (loadedServices.length<=0){
+              if (this.noService==1){return}
+              this.noService==1
+              alert('No service at the moment')
+              return
+            }
+            
             loadedServices.forEach((serviceObject) => {
+             
               this.serviceList.unshift(serviceObject);
               
             },

@@ -32,7 +32,6 @@ export class ReviewService {
             map(data => {
                 return data
             }),
-            catchError(this.handleErrors)
         );
     }
 
@@ -44,7 +43,7 @@ export class ReviewService {
     }
 
     handleErrors(error: Response) {
-        console.log(JSON.stringify(error.json()));
+        // console.log(JSON.stringify(error.json()));
         return Observable.throw(error);
     }
 }

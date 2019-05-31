@@ -43,6 +43,8 @@ export class HomeComponent implements OnInit {
     NotBody=""
     NotImage=""
     NotIcon=""
+    noService=0
+    noProduct=0
     NotRequestStatus=""
     NotRequestType=""
     NotProductName=""
@@ -70,7 +72,7 @@ export class HomeComponent implements OnInit {
       }
   ).then(i=> {
     if(this.NotRequestType=="Request"){
-      console.log("It worked:" + this.NotRequestType)
+      // console.log("It worked:" + this.NotRequestType)
     let param = {token: getString("token"), name:this.NotProductName, image: this.NotImage , owner:this.NotProductOwner, price:this.NotProductPrice, status:this.NotRequestStatus }
     this.routerExtensions.navigate(["/status"], { queryParams: param });
     }
@@ -84,10 +86,11 @@ export class HomeComponent implements OnInit {
 
     messaging.registerForPushNotifications({
       onPushTokenReceivedCallback: (token: string): void => {
-        console.log("Firebase plugin received a push token: " + token);
+        // console.log("Firebase plugin received a push token: " + token);
       },
     
       onMessageReceivedCallback: (message: Message) => {
+        
         if(message.data.app=="user") {
           return false
         }
@@ -112,10 +115,10 @@ export class HomeComponent implements OnInit {
         at: new Date(new Date().getTime() + (10 * 1000)) // 10 seconds from now
       }]).then(
           function() {
-            console.log("Notification scheduled");
+            // console.log("Notification scheduled");
           },
           function(error) {
-            console.log("scheduling error: " + error);
+            // console.log("scheduling error: " + error);
           }
       )
       
@@ -126,7 +129,7 @@ export class HomeComponent implements OnInit {
     
       // Whether you want this plugin to always handle the notifications when the app is in foreground. Currently used on iOS only. Default false.
      
-    }).then(() => console.log("Registered for push"));
+    }).then(() =>  console.log("Registered for push"));
     
     this.page.actionBarHidden = false;
     this.isLoading = true;
@@ -153,6 +156,12 @@ export class HomeComponent implements OnInit {
       
       this.ProductsService.load()
         .subscribe(loadedProducts => {
+          if (loadedProducts.length<=0){
+            if (this.noProduct==1){return}
+            this.noProduct==1
+            alert('No product at the moment')
+            return
+          }
           loadedProducts.forEach((productObject) => {
             this.productList.unshift(productObject);
             
@@ -167,6 +176,12 @@ export class HomeComponent implements OnInit {
         this.isLoading = true;
         this.ServiceService.load()
           .subscribe(loadedServices => {
+            if (loadedServices.length<=0){
+              if (this.noService==1){return}
+              this.noService==1
+              alert('No service at the moment')
+              return
+            }
             loadedServices.forEach((serviceObject) => {
               this.serviceList.unshift(serviceObject);
               

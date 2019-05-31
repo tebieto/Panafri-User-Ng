@@ -47,16 +47,29 @@ export class ChangeComponent implements OnInit {
   
   signUp() {
     this.user.token=getString("token")
-    console.log(this.user)
+    // console.log(this.user)
     this.isLoading = true;
     this.changeService.change(this.user)
     .subscribe(
       (result) => {
         this.isLoading = false;
-        console.log(result)
+        if(result) {
+          alert(result.success)
+        }
         this.logout()
     },
-      (error) => alert("Unfortunately we could not create your account.")
+      (error) => {
+        let body = JSON.stringify(error._body)
+        //console.log(body)
+       
+        if (body){
+          body = body.replace(/"|\\|}|\{|]|\[/g, "")
+          body = body.replace(/,/g, " ")
+          alert(body)
+          return
+        }
+        alert("Unfortunately we could not change your password.")
+      }
     );
       
   }

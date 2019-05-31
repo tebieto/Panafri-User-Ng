@@ -65,7 +65,7 @@ export class StatusComponent implements OnInit {
 
       this.SellerService.load(params)
       .subscribe(loadedSeller => {
-        console.log(loadedSeller)
+        // console.log(loadedSeller)
         this.SellerName = loadedSeller[0].name
         this.SellerAvatar = loadedSeller[0].avatar
         this.SellerPhone = loadedSeller[0].phone
@@ -104,7 +104,19 @@ export class StatusComponent implements OnInit {
     this.isStatusing = !this.isStatusing;
   }
 
+  public checkStatus(status){
+    if(status==0){
+      return 'pending'
+    } else if (status == 1){
+      return 'completed'
+    }
+  }
+
+  call() {
+
+    phone.dial(String(this.SellerPhone), true)
   
+}
 
   
 }

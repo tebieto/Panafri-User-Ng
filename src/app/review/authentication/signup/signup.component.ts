@@ -35,12 +35,6 @@ export class SignupComponent implements OnInit {
     private route: ActivatedRoute
     ) {
     this.user = new Signup();
-    this.user.email = "regina@gmail.com";
-    this.user.name = "Regina Ebieto";
-    this.user.phone = "08399485734";
-    this.user.password = "1223454allu4";
-    this.user.password_confirmation = "1223454allu4";
-    this.user.deviceToken= this.DeviceToken;
     
   
   
@@ -58,11 +52,11 @@ export class SignupComponent implements OnInit {
 
     messaging.registerForPushNotifications({
       onPushTokenReceivedCallback: (token: string): void => {
-        console.log("Firebase plugin received a push token: " + token);
+        // console.log("Firebase plugin received a push token: " + token);
       },
     
       onMessageReceivedCallback: (message: Message) => {
-       console.log("Push message received: " + message.data.body);
+       // console.log("Push message received: " + message.data.body);
        this.NotTitle=message.data.title
        this.NotBody=message.data.body
        this.NotImage=message.data.image
@@ -79,10 +73,10 @@ export class SignupComponent implements OnInit {
         at: new Date(new Date().getTime() + (10 * 1000)) // 10 seconds from now
       }]).then(
           function() {
-            console.log("Notification scheduled");
+            // console.log("Notification scheduled");
           },
           function(error) {
-            console.log("scheduling error: " + error);
+            // console.log("scheduling error: " + error);
           }
       )
       
@@ -93,7 +87,7 @@ export class SignupComponent implements OnInit {
     
       // Whether you want this plugin to always handle the notifications when the app is in foreground. Currently used on iOS only. Default false.
      
-    }).then(() => console.log("Registered for push"));
+    }).then(() =>  console.log("Registered for push"));
 
     this.route.queryParams.subscribe(params => {
 
@@ -118,7 +112,18 @@ export class SignupComponent implements OnInit {
           const param = Object.assign({}, token, Product);
           this.router.navigate(["/AuthRequest"], { queryParams: param });
     },
-      (error) => alert("Unfortunately we could not create your account.")
+      (error) => {
+        let body = JSON.stringify(error._body)
+        //console.log(body)
+       
+        if (body){
+          body = body.replace(/"|\\|}|\{|]|\[/g, "")
+          body = body.replace(/,/g, " ")
+          alert(body)
+          return
+        }
+        alert("Unfortunately we could not create your account.")
+      }
     );
       
   }

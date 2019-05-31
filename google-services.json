@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1020383458656",
+    "firebase_url": "https://panafridev.firebaseio.com",
+    "project_id": "panafridev",
+    "storage_bucket": "panafridev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020383458656:android:02831444b7603753",
+        "android_client_info": {
+          "package_name": "app.panafri.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020383458656-f0jbai605tbnekni50uao6k3mpsnuru8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyZQzTTWMoGvCCPSbzz75SQVBp5mDnN5Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

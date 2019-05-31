@@ -5,6 +5,8 @@ import { NativeScriptHttpModule } from "nativescript-angular/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
+import { CircularProgressBarComponent } from "./circular-progress-bar";
+
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
@@ -28,6 +30,7 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
     ],
     declarations: [
         AppComponent,
+        CircularProgressBarComponent
 
     ],
     schemas: [

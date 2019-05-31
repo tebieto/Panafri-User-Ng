@@ -12,7 +12,7 @@ export class RequestService {
     constructor(private http: Http) { }
     token= ""
     request(request: Request) {
-        console.log(request)
+        // console.log(request)
          this.token = "Bearer" + request.token
 
         let headers = new Headers({ "Authorization": this.token });
@@ -34,7 +34,6 @@ export class RequestService {
             map(data => {
                 return data
             }),
-            catchError(this.handleErrors)
         );
     }
 
@@ -46,7 +45,7 @@ export class RequestService {
     }
 
     handleErrors(error: Response) {
-        console.log(JSON.stringify(error.json()));
+        // console.log(JSON.stringify(error.json()));
         return Observable.throw(error);
     }
 }

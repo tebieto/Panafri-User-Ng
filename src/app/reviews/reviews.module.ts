@@ -7,7 +7,6 @@ import { NSModuleFactoryLoader } from "nativescript-angular/router";
 import { NativeScriptUISideDrawerModule,  } from "nativescript-ui-sidedrawer/angular";
 import { NativeScriptUIGaugeModule } from "nativescript-ui-gauge/angular";
 import { GridViewModule } from 'nativescript-grid-view/angular';
-import { CircularProgressBarComponent } from "../circular-progress-bar";
 import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
@@ -32,7 +31,7 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
     ],
     declarations: [
         ReviewsComponent,
-        CircularProgressBarComponent
+        
     ],
     schemas: [
         NO_ERRORS_SCHEMA

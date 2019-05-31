@@ -111,10 +111,14 @@ export class ReviewComponent implements OnInit {
     this.reviewService.review(this.review)
       .subscribe(
         (result) => {
-          console.log(result)
+         // // console.log(result)
+
+         if(result.success){
+          alert(result.success)
+         }
 
           
-          this.notify()
+          //this.notify()
 
           this.isLoading = false;
           this.listLoaded = true;
@@ -122,7 +126,7 @@ export class ReviewComponent implements OnInit {
          
       },
         (error) => {
-          console.log(error)
+          // console.log(error)
         } 
       );
       
@@ -138,11 +142,11 @@ export class ReviewComponent implements OnInit {
         this.not.icon = this.AuthAvatar;
         this.not.deviceToken = this.PartnerDeviceToken;
         this.not.authDeviceToken =  getString("deviceToken")
-        console.log(this.not)
+        // console.log(this.not)
         this.notificationService.notification(this.not)
     .subscribe(
       (result) => {
-       console.log(result)
+       // console.log(result)
     },
       (error) => alert("Unfortunately we could not push notification.")
     );

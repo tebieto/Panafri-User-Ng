@@ -4,7 +4,7 @@
     
     <ScrollView>
         <StackLayout>
-            <SearchBar hint="Search Products" (loaded)="sBLoaded($event)" [text]="searchPhrase" (submit)="onSearchSubmit($event)"></SearchBar>
+          <SearchBar hint="Search for Product" [text]="searchPhrase" (loaded)="sBLoaded($event)" (textChange)="onTextChanged($event)" (submit)="onSearchSubmit($event)" ></SearchBar>
             <GridLayout rows="*" columns="*, *, *">
                 <Button class="btn btn-outline" row="0" col="0" class="fab" text="&#xf009; VIEW"></Button>
                 <Button class="btn btn-outline" row="0" col="1" class="fab" text="&#Xf161; SORT"></Button>

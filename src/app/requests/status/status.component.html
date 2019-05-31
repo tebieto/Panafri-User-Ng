@@ -23,7 +23,7 @@
                       <Label text="{{SellerName}}" class="h3 title m-r-2"></Label>
                       <Label text="&#xf058;" class="fab icon h3 caption"></Label>
                   </StackLayout>
-                  <Label text="{{statusList[0].location.toUpperCase()}}" class="h5 caption"></Label>
+                  <!--<Label text="{{statusList[0].location.toUpperCase()}}" class="h5 caption"></Label>-->
               </StackLayout>
               <Image col="1" row="0" src="{{SellerAvatar}}" class="image img-circle"></Image>
           </GridLayout>
@@ -33,7 +33,8 @@
              textWrap="true" class="body caption"></Label>
           </StackLayout>
       </StackLayout>
-      <Button dock="top" text="Status:{{statusList[0].status}}" class="fab icon btn-primary"></Button>
+      <Button dock="top" text="Status: {{checkStatus(statusList[0].status)}}" class="fab icon btn-primary"></Button>
+      <Button dock="top" text="&#xf095;" (tap)="call()" class="fab icon btn-primary rounded"></Button>
       
     </DockLayout>
     <GridLayout rows="auto, *">

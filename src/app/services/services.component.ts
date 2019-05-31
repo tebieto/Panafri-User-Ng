@@ -35,6 +35,9 @@ export class ServicesComponent implements OnInit {
       this.isLoading = true;
       this.ServicesService.load()
         .subscribe(loadedServices => {
+          if(loadedServices.length<=0){
+            alert('No service at the moment')
+          }
           loadedServices.forEach((serviceObject) => {
             this.serviceList.unshift(serviceObject);
           });
@@ -56,7 +59,20 @@ export class ServicesComponent implements OnInit {
 	public sBLoaded(args) {
 		var searchbar: SearchBar = <SearchBar>args.object;
 		searchbar.android.clearFocus();
-	}
+  }
+  
+  onSearchSubmit(args) {
+
+    let searchBar = <SearchBar>args.object;
+        let active =searchBar.text
+        this.routerExtensions.navigate(['search', active]);
+
+  }
+
+  public onTextChanged(args) {
+       
+        
+  }
 
 	public goBack() {
 		this.routerExtensions.backToPreviousPage();

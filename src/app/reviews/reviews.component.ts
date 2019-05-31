@@ -42,6 +42,10 @@ export class ReviewsComponent implements OnInit {
      
       this.ReviewsService.load()
         .subscribe(loadedReviews => {
+          if (loadedReviews.length<=0){
+            alert('No review at the moment')
+            return
+          }
           loadedReviews.forEach((reviewObject) => {
             this.reviewList.unshift(reviewObject);
           });
@@ -49,7 +53,7 @@ export class ReviewsComponent implements OnInit {
           this.listLoaded = true;
         },
         (error)=>{
-          console.log(error)
+          // console.log(error)
         });
   
     }

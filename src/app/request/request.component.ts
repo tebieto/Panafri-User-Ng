@@ -86,12 +86,12 @@ export class RequestComponent implements OnInit {
 
       this.SellerService.load(params)
       .subscribe(loadedSeller => {
-        console.log(loadedSeller)
+        // console.log(loadedSeller)
         this.SellerName = loadedSeller[0].name
         this.SellerAvatar = loadedSeller[0].avatar
         this.SellerPhone = loadedSeller[0].phone
         this.SellerDeviceToken = loadedSeller[0].profile.about
-        console.log("device:" + this.SellerDeviceToken)
+        // console.log("device:" + this.SellerDeviceToken)
 
       })
 
@@ -143,7 +143,7 @@ export class RequestComponent implements OnInit {
     this.requestService.request(this.request)
       .subscribe(
         (result) => {
-          console.log(result)
+          // console.log(result)
 
           
         this.notify(result.id)
@@ -179,9 +179,12 @@ export class RequestComponent implements OnInit {
         this.notificationService.notification(this.not)
     .subscribe(
       (result) => {
-       console.log(result)
+       // console.log(result)
     },
-      (error) => alert("Unfortunately we could not push notification.")
+      (error) => {
+        // console.log(error)
+        alert("Unfortunately we could not push notification.")
+      }
     );
 
   }

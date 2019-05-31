@@ -36,13 +36,17 @@ export class ProductsComponent implements OnInit {
       
       this.ProductsService.load()
         .subscribe(loadedProducts => {
+          if (loadedProducts.length<=0){
+            alert('No product at the moment')
+            return
+          }
           loadedProducts.forEach((productObject) => {
             this.productList.unshift(productObject);
           });
           this.isLoading = false;
           this.listLoaded = true;
           
-          console.log(this.productList)
+          // console.log(this.productList)
         });
         
         
@@ -61,7 +65,20 @@ export class ProductsComponent implements OnInit {
 	public sBLoaded(args) {
 		var searchbar: SearchBar = <SearchBar>args.object;
 		searchbar.android.clearFocus();
-	}
+  }
+  
+  onSearchSubmit(args) {
+
+    let searchBar = <SearchBar>args.object;
+        let active =searchBar.text
+        this.routerExtensions.navigate(['search', active]);
+
+  }
+
+  public onTextChanged(args) {
+       
+        
+  }
 
 	public goBack() {
 		this.routerExtensions.backToPreviousPage();

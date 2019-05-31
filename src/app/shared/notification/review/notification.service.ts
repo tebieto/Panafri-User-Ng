@@ -16,6 +16,7 @@ export class NotificationService {
             "title" : notification.title,
             "body"  : notification.body,
             "app"  : "user",
+            "type"  : "Review",
             "image"  : notification.image,
             "device"  : notification.authDeviceToken,
         },
@@ -28,7 +29,6 @@ export class NotificationService {
         ).pipe(
             map(response => response.json()),
             map(data => {return data}),
-            catchError(this.handleErrors)
         );
     }
 
@@ -40,7 +40,7 @@ export class NotificationService {
     }
 
     handleErrors(error: Response) {
-        console.log(JSON.stringify(error.json()));
+        // console.log(JSON.stringify(error.json()));
         return Observable.throw(error);
     }
 }

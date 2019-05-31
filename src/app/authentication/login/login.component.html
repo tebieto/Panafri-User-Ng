@@ -1,4 +1,4 @@
-<ActionBar title="LOG IN">
+<ActionBar title="LOG IN" class="action-bar">
     <NavigationButton android.systemIcon="ic_menu_back" text="Back to ActionBar" (tap)="goBack()"></NavigationButton>
 </ActionBar>
 <ScrollView>
@@ -9,5 +9,7 @@
             [(ngModel)]="user.password"></TextField>
 
         <Button class="btn btn-primary" text="LOG IN" (tap)="Login()"></Button>
+        <Button class="forgot-pas" text="Forgot password?" (tap)="Forgot()"></Button>
+        <Button class="forgot-pas" text="SIGN UP" (tap)="SignUp()"></Button>
     </StackLayout>
 </ScrollView>

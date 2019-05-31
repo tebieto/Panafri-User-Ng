@@ -16,6 +16,7 @@ export class NotificationService {
             "title" : notification.title,
             "body"  : notification.body,
             "app"  : "user",
+            "type"  : "Request",
             "rid" : notification.rid,
             "price": notification.price,
             "name": notification.name,
@@ -25,13 +26,14 @@ export class NotificationService {
         "to" : notification.deviceToken
     }
 
+    // console.log(notification.deviceToken)
+
         return this.http.post(
             Config.fcmUrl,this.data,
             { headers: this.getCommonHeaders() }
         ).pipe(
             map(response => response.json()),
             map(data => {return data}),
-            catchError(this.handleErrors)
         );
     }
 
@@ -43,7 +45,7 @@ export class NotificationService {
     }
 
     handleErrors(error: Response) {
-        console.log(JSON.stringify(error.json()));
+        // console.log(JSON.stringify(error.json()));
         return Observable.throw(error);
     }
 }

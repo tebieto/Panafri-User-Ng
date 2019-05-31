@@ -70,11 +70,13 @@ export class EditComponent implements OnInit {
     this.editService.edit(this.user)
     .subscribe(
       (result) => {
-        console.log(result)
+        if(result){
+          alert(result.success)
+        }
         this.isLoading = false;
         this.router.navigate(["/home"], {queryParams: {jwt:getString("token")}});
     },
-      (error) => alert("Unfortunately we could not create your account.")
+      (error) => alert("Unfortunately we could not edit your profile.")
     );
       
   }

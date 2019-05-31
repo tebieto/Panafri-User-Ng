@@ -39,7 +39,6 @@ export class ServicesService {
                 });
                 return serviceList;
             }),
-            catchError(this.handleErrors)
         );
     }
 
@@ -52,7 +51,7 @@ export class ServicesService {
     }
 
     handleErrors(error: Response) {
-        console.log(JSON.stringify(error.json()));
+        // console.log(JSON.stringify(error.json()));
         return Observable.throw(error);
     }
 }

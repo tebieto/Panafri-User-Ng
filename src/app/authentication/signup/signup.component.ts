@@ -36,8 +36,8 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("device token:" + getString("deviceToken"))
-    console.log("token:" + getString("token"))
+    // console.log("device token:" + getString("deviceToken"))
+    // console.log("token:" + getString("token"))
     this.page.actionBarHidden = false;
   
     messaging.getCurrentPushToken()
@@ -59,9 +59,25 @@ export class SignupComponent implements OnInit {
         setString("token", result.token);
         this.router.navigate(["/home"], { queryParams: { jwt: result.token } });
     },
-      (error) => alert("Unfortunately we could not create your account.")
+      (error) => {
+        let body = JSON.stringify(error._body)
+        //console.log(body)
+       
+        if (body){
+          body = body.replace(/"|\\|}|\{|]|\[/g, "")
+          body = body.replace(/,/g, " ")
+          alert(body)
+          return
+        }
+        alert("Unfortunately we could not create your account.")
+      }
     );
       
+  }
+
+  Login() {
+
+    this.router.navigate(["/login"]);
   }
 
   public goBack() {

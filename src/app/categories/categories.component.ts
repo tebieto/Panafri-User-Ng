@@ -32,6 +32,10 @@ export class CategoriesComponent implements OnInit {
       this.isLoading = true;
       this.CategoriesService.load()
         .subscribe(loadedCategories => {
+          if (loadedCategories.length<=0){
+            alert('No category at the moment')
+            return
+          }
           loadedCategories.forEach((categoryObject) => {
             this.categoryList.unshift(categoryObject);
           });

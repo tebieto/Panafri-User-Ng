@@ -1,5 +1,5 @@
 <ActionBar title="Panafri" class="action-bar">
-    <NavigationButton icon="res://menu" (tap)="onOpenDrawerTap()"></NavigationButton>
+    <NavigationButton icon="res://menu" (tap)="onOpenDrawerTap()" class="nav-icons"></NavigationButton>
 
 </ActionBar>
 
@@ -12,11 +12,11 @@
     <ScrollView>
       <StackLayout class="sideStackLayout">
         <Label text="&#xf00a; &nbsp; Categories" (tap)="goToCategories()" class="sideLabel fab icon"></Label>
-        <Label text="&#xf59d; &nbsp; Products" (tap)="goToProducts()" class="sideLabel fab icon"></Label>
-        <Label text="&#xf552; &nbsp; Services" (tap)="goToServices()" class="sideLabel fab icon"></Label>
-        <Label text="&#xf27a; &nbsp; Requests"  class="sideLabel fab icon" (tap)="goToRequests()"></Label>
-        <Label text="&#xf013; &nbsp; Review Partners" (tap)="reviewPartners()" class="sideLabel fab icon"></Label>
-       <Label text="&#xf013; &nbsp; Edit Profile" (tap)="editProfile()" class="sideLabel fab icon"></Label>
+        <Label text="&#xf07a; &nbsp; Products" (tap)="goToProducts()" class="sideLabel fab icon"></Label>
+        <Label text="&#xf2b5; &nbsp; Services" (tap)="goToServices()" class="sideLabel fab icon"></Label>
+        <Label text="&#xf021; &nbsp; Requests"  class="sideLabel fab icon" (tap)="goToRequests()"></Label>
+        <Label text="&#xf681; &nbsp; Review Partners" (tap)="reviewPartners()" class="sideLabel fab icon"></Label>
+       <Label text="&#xf044; &nbsp; Edit Profile" (tap)="editProfile()" class="sideLabel fab icon"></Label>
        <Label text="&#xf013; &nbsp; Change Password" (tap)="changePassword()" class="sideLabel fab icon"></Label>
         <Label text="&#xf2f5; &nbsp; Log out" (tap)="logout()" class="sideLabel fab icon"></Label>
       </StackLayout>
@@ -28,7 +28,7 @@
         <SearchBar hint="Search for Product & Service" [text]="searchPhrase" (loaded)="sBLoaded($event)" (textChange)="onTextChanged($event)" (submit)="onSearchSubmit($event)" ></SearchBar>
         <Label class="categories"  text="Browse from categories"></Label>
         <GridLayout rows="*, *, *" columns="*, *, *">
-          <StackLayout class="category-icon" row="0" col="0" (tap)="goToCategory()">
+          <StackLayout class="category-icon" row="0" col="0" (tap)="goToCategory('Transporter')">
               <Label class="fab icon" text="&#xf1b9;"></Label>
               <Label class="name" text="Transporter"></Label>
           </StackLayout>
@@ -36,31 +36,31 @@
               <Label class="fab icon" text="&#xf553;"></Label>
               <Label class="name" text="Fashion"></Label>
           </StackLayout>
-          <StackLayout class="category-icon" row="0" col="2" (tap)="goToCategory()">
+          <StackLayout class="category-icon" row="0" col="2" (tap)="goToCategory('Delivery')">
             <Label class="fab icon" text="&#xf48b;"></Label>
             <Label class="name" text="Delivery"></Label>
           </StackLayout>
 
-          <StackLayout class="category-icon" row="1" col="0" (tap)="goToCategory()">
+          <StackLayout class="category-icon" row="1" col="0" (tap)="goToCategory('Catering')">
               <Label class="fab icon" text="&#xf2e7;"></Label>
               <Label class="name" text="Catering"></Label>
           </StackLayout>
-          <StackLayout class="category-icon" row="1" col="1" (tap)="goToCategory()">
+          <StackLayout class="category-icon" row="1" col="1" (tap)="goToCategory('Real Estate')">
               <Label class="fab icon" text="&#xf64f;"></Label>
               <Label class="name" text="Real Estate"></Label>
           </StackLayout>
-          <StackLayout class="category-icon" row="1" col="2" (tap)="goToCategory()">
+          <StackLayout class="category-icon" row="1" col="2" (tap)="goToCategory('Electronics')">
             <Label class="fab icon" text="&#xf26c;"></Label>
             <Label class="name" text="Electronics"></Label>
           </StackLayout>
 
-          <StackLayout class="category-icon" row="2" col="0" (tap)="goToCategory()">
+          <StackLayout class="category-icon" row="2" col="0" (tap)="goToCategory('Drinks and Party')">
               <Label class="fab icon" text="&#xf5ce;"></Label>
               <Label class="name" text="Drinks & Party"></Label>
           </StackLayout>
-          <StackLayout class="category-icon" row="2" col="1" (tap)="goToCategory()">
+          <StackLayout class="category-icon" row="2" col="1" (tap)="goToCategory('Furniture')">
               <Label class="fab icon" text="&#xf4b8;"></Label>
-              <Label class="name" text="Funitures"></Label>
+              <Label class="name" text="Furniture"></Label>
           </StackLayout>
           <StackLayout class="category-icon" row="2" col="2" (tap)="goToCategories()">
             <Label class="fab icon" text="&#xf141;"></Label>

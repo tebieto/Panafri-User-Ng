@@ -9,12 +9,12 @@ import { Products } from "./products.model";
 @Injectable()
 export class ProductsService {
     baseUrl = Config.apiUrl + "products";
-
+   
     constructor(private http: Http) { }
 
     load() {
         // Kinvey-specific syntax to sort the groceries by last modified time. Don’t worry about the details here.
-    
+       // console.log(this.baseUrl)
         return this.http.get(this.baseUrl).pipe(
             map(res => res.json()),
             map(data => {
@@ -37,7 +37,6 @@ export class ProductsService {
                 });
                 return productList;
             }),
-            catchError(this.handleErrors)
         );
     }
 
@@ -50,7 +49,7 @@ export class ProductsService {
     }
 
     handleErrors(error: Response) {
-        console.log(JSON.stringify(error.json()));
+        // console.log(JSON.stringify(error.json()));
         return Observable.throw(error);
     }
 }

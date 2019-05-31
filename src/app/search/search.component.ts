@@ -39,6 +39,10 @@ export class SearchComponent implements OnInit {
       this.isLoading = true;
       this.SearchService.load(Active)
         .subscribe(loadedSearch => {
+          if (loadedSearch.length<=0){
+            alert('Result not found')
+            return
+          }
           loadedSearch.forEach((searchObject) => {
             this.searchList.unshift(searchObject);
           });

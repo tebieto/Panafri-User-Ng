@@ -43,12 +43,16 @@ export class RequestsComponent implements OnInit {
      
       this.RequestsService.load(params)
         .subscribe(loadedRequests => {
+          if (loadedRequests.length<=0){
+            alert('No request at the moment')
+            return
+          }
           loadedRequests.forEach((requestObject) => {
             this.requestList.unshift(requestObject);
           });
           this.isLoading = false;
           this.listLoaded = true;
-          console.log(this.requestList);
+          // console.log(this.requestList);
         });
           
       });
@@ -69,7 +73,7 @@ export class RequestsComponent implements OnInit {
        return r.id===item
        });
        let param = {token: getString("token"), name:Status.product.name, image: Status.product.image, owner:Status.product.owner, price:Status.product.price, status:Status.status }
-       this.routerExtensions.navigate(["/status"], { queryParams: param });
+       this.routerExtensions.navigate(["/request-status"], { queryParams: param });
      }
 
 	public goBack() {

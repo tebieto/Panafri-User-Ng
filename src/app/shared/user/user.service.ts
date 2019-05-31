@@ -26,7 +26,6 @@ export class UserService {
                 userList.push(data)
                 return userList;
             }),
-            catchError(this.handleErrors)
         );
     }
 
@@ -39,7 +38,7 @@ export class UserService {
     }
 
     handleErrors(error: Response) {
-        console.log(JSON.stringify(error.json()));
+        // console.log(JSON.stringify(error.json()));
         return Observable.throw(error);
     }
 }
